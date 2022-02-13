@@ -12,11 +12,12 @@ public class DriveDistanceCommand extends CommandBase {
     this.distance = distance;
     this.speed = speed;
     this.drive = drive;
+    addRequirements(drive);
   }
 
   @Override public void initialize() {
-    drive.tankDrive(0, 0);
-    drive.resetEncoders();
+    drive.stop();
+    // drive.resetEncoders();
   }
 
   @Override public void execute() {
@@ -27,7 +28,7 @@ public class DriveDistanceCommand extends CommandBase {
     drive.tankDrive(0, 0);
   }
 
-  @Override public boolean isFinished() {
-    return Math.abs(drive.getAverageDistance()) >= distance;
-  }
+  // @Override public boolean isFinished() {
+  //   return Math.abs(drive.getAverageDistance()) >= distance;
+  // }
 }

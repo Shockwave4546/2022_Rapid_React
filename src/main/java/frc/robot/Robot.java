@@ -36,7 +36,7 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance()
       .setDefaultCommand(
         robotContainer.drive, 
-        new ControllerDriveCommand(robotContainer.driveController, robotContainer.drive)
+        new ControllerDriveCommand(robotContainer.driveController, robotContainer.drive).perpetually()
       );
   }
 

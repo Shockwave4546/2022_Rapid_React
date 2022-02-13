@@ -9,5 +9,5 @@ public final class Constants {
   public static final int DRIVE_RIGHT_ENCODER_B = 0;
   public static final int INTAKE_MOTOR_ID = 0;
   public static final int DRIVE_CONTROLLER_PORT = 0;
-  public static final int OPERATOR_CONTROLLER_PORT = 0;
+  public static final int OPERATOR_CONTROLLER_PORT = 1;
 }

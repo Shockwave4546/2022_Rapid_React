@@ -17,7 +17,7 @@ public class RotateCommand extends CommandBase {
 
   @Override public void initialize() {
     drive.stop();
-    drive.resetEncoders();
+    // drive.resetEncoders();
   }
 
   @Override
@@ -30,12 +30,16 @@ public class RotateCommand extends CommandBase {
   }
 
   @Override public boolean isFinished() {
-    final var inchPerDegree = Math.PI * 
+    // https://github.com/Bqckword/TestProject3/blob/main/src/main/java/frc/robot/commands/TurnDegrees.java
+    return false;
+    // wheel diameter = 6 in
+    // 
+    // final var inchPerDegree = Math.PI * 
   }
 
-  private double getAverageTurningDistance() {
-    final var leftDistance = Math.abs(drive.getLeftDistance());
-    final var rightDistance = Math.abs(drive.getRightDistance());
-    return (leftDistance + rightDistance) / 2;
-  }
+  // private double getAverageTurningDistance() {
+  //   final var leftDistance = Math.abs(drive.getLeftDistance());
+  //   final var rightDistance = Math.abs(drive.getRightDistance());
+  //   return (leftDistance + rightDistance) / 2;
+  // }
 }
