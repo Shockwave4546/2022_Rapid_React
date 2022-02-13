@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 
 public class DriveSubsystem extends SubsystemBase {
   /* 
@@ -34,6 +33,11 @@ public class DriveSubsystem extends SubsystemBase {
     if (leftSpeed < -1.0 || leftSpeed > 1.0) throw new IllegalArgumentException("Left speed can't be greater than 1.0 or less than -1.0.");
     if (rightSpeed < -1.0 || rightSpeed > 1.0) throw new IllegalArgumentException("Right speed can't be greater than 1.0 or less than -1.0.");
     diffDrive.tankDrive(leftSpeed, rightSpeed);
+  }
+
+  public void stop() {
+    leftMotorGroup.set(0);
+    rightMotorGroup.set(0);
   }
 
   public void resetEncoders() {

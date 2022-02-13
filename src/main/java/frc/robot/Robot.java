@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.ControllerDriveCommand;
 
 public class Robot extends TimedRobot {
   private final RobotContainer robotContainer = new RobotContainer();
@@ -32,7 +33,11 @@ public class Robot extends TimedRobot {
   }
 
   @Override public void teleopInit() {
-
+    CommandScheduler.getInstance()
+      .setDefaultCommand(
+        robotContainer.drive, 
+        new ControllerDriveCommand(robotContainer.driveController, robotContainer.drive)
+      );
   }
 
   @Override public void teleopPeriodic() {
