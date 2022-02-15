@@ -17,7 +17,7 @@ public class DriveDistanceCommand extends CommandBase {
 
   @Override public void initialize() {
     drive.stop();
-    // drive.resetEncoders();
+    drive.resetEncoders();
   }
 
   @Override public void execute() {
@@ -28,7 +28,7 @@ public class DriveDistanceCommand extends CommandBase {
     drive.tankDrive(0, 0);
   }
 
-  // @Override public boolean isFinished() {
-  //   return Math.abs(drive.getAverageDistance()) >= distance;
-  // }
+  @Override public boolean isFinished() {
+    return Math.abs(drive.getAverageDistance()) >= distance;
+  }
 }

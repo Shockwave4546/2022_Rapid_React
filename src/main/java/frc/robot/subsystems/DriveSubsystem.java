@@ -15,6 +15,10 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveSubsystem extends SubsystemBase {
+  // A 0 B 1
+  public final Encoder leftEncoder = new Encoder(0, 1);
+  // A 2 B 3
+  public final Encoder rightEncoder = new Encoder(2, 3);
   /* 
   frontLeft     frontRight
   backLeft      backRight
@@ -34,14 +38,14 @@ public class DriveSubsystem extends SubsystemBase {
 
   public DriveSubsystem() {
     rightMotor.setInverted(true);
-    // leftEncoder.setDistancePerPulse((Math.PI * WHEEL_DIAMETER_INCH) / COUNTS_PER_REVOLUTION);
-    // rightEncoder.setDistancePerPulse((Math.PI * WHEEL_DIAMETER_INCH) / COUNTS_PER_REVOLUTION);
+    leftEncoder.setDistancePerPulse((Math.PI * WHEEL_DIAMETER_INCH) / COUNTS_PER_REVOLUTION);
+    rightEncoder.setDistancePerPulse((Math.PI * WHEEL_DIAMETER_INCH) / COUNTS_PER_REVOLUTION);
   }
 
   public void tankDrive(double leftSpeed, double rightSpeed) {
-    if (leftSpeed < -1.0 || leftSpeed > 1.0) throw new IllegalArgumentException("Left speed can't be greater than 1.0 or less than -1.0.");
-    if (rightSpeed < -1.0 || rightSpeed > 1.0) throw new IllegalArgumentException("Right speed can't be greater than 1.0 or less than -1.0.");
-    diffDrive.tankDrive(leftSpeed, rightSpeed);
+    // if (leftSpeed < -1.0 || leftSpeed > 1.0) throw new IllegalArgumentException("Left speed can't be greater than 1.0 or less than -1.0.");
+    // if (rightSpeed < -1.0 || rightSpeed > 1.0) throw new IllegalArgumentException("Right speed can't be greater than 1.0 or less than -1.0.");
+    diffDrive.tankDrive(leftSpeed , rightSpeed * 0.8);
   }
 
   public void arcadeDrive(double speed, double rotation) {
@@ -52,23 +56,25 @@ public class DriveSubsystem extends SubsystemBase {
 
   public void stop() {
     leftMotor.set(0);
-    leftMotor.set(0);
+    rightMotor.set(0);
   }
 
-  // public void resetEncoders() {
-  //   leftEncoder.reset();
-  //   rightEncoder.reset();
-  // }
+  public void resetEncoders() {
+    leftEncoder.reset();
+    rightEncoder.reset();
+  }
 
-  // public double getLeftDistance() {
-  //   return leftEncoder.getDistance();
-  // }
+  public double getLeftDistance() {
+    System.out.println("Left " + leftEncoder.getDistance() + " " + leftEncoder.getRaw());
+    return leftEncoder.getDistance();
+  }
 
-  // public double getRightDistance() {
-  //   return rightEncoder.getDistance();
-  // }
+  public double getRightDistance() {
+    System.out.println("Right " + rightEncoder.getDistance() + " " + rightEncoder.getRaw());
+    return rightEncoder.getDistance();
+  }
 
-  // public double getAverageDistance() {
-  //   return (getLeftDistance() + getRightDistance()) / 2;
-  // }
+  public double getAverageDistance() {
+    return (getLeftDistance() + getRightDistance()) / 2;
+  }
 }

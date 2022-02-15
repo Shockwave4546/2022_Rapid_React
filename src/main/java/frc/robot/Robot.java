@@ -14,6 +14,7 @@ public class Robot extends TimedRobot {
   @Override public void robotPeriodic() {
     CommandScheduler.getInstance().run();
     robotContainer.telemetryManager.updateData();
+    System.out.println(robotContainer.drive.leftEncoder.getRaw() + " " + robotContainer.drive.rightEncoder.getRaw());
   }
 
   @Override public void disabledInit() {
@@ -36,7 +37,7 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance()
       .setDefaultCommand(
         robotContainer.drive, 
-        new ControllerDriveCommand(robotContainer.driveController, robotContainer.drive).perpetually()
+        new ControllerDriveCommand(robotContainer.driveController, robotContainer.drive)
       );
   }
 
