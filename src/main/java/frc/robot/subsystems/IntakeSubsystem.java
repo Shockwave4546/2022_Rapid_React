@@ -11,7 +11,6 @@ public class IntakeSubsystem extends SubsystemBase {
   private final MotorController motor = new CANSparkMax(Constants.INTAKE_MOTOR_ID, MotorType.kBrushless);
 
   public void setSpeed(double speed) {
-    if (speed < -1.0 || speed > 1.0) throw new IllegalArgumentException("Speed can't be greater than 1.0 or less than -1.0.");
     motor.set(speed);
   }
 

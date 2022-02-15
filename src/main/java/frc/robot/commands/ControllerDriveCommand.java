@@ -19,12 +19,7 @@ public class ControllerDriveCommand extends CommandBase {
     drive.stop();
   }
 
-  // TODO: Account for controller drift somehow
   @Override public void execute() {
-    // System.out.println(controller.getRightY() + " " + controller.getLeftY());
-    // if (controller.getLeftY() > -0.01 && controller.getLeftY() < 0.01) return;
-    // if (controller.getRightY() > -0.01 && controller.getRightY() < 0.01) return;
-
     drive.tankDrive(controller.getRightY(), controller.getLeftY());
   }
 
