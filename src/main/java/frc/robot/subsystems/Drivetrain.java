@@ -2,6 +2,8 @@ package frc.robot.subsystems;
 
 import static frc.robot.Constants.*;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
@@ -15,10 +17,10 @@ public class Drivetrain extends SubsystemBase {
   */
   private final Encoder leftEncoder = new Encoder(DRIVE_LEFT_ENCODER_A, DRIVE_LEFT_ENCODER_B);
   private final Encoder rightEncoder = new Encoder(DRIVE_RIGHT_ENCODER_A, DRIVE_RIGHT_ENCODER_B);
-  private final MotorController frontLeftMotor = null;
-  private final MotorController backLeftMotor = null;
-  private final MotorController frontRightMotor = null;
-  private final MotorController backRightMotor = null;
+  private final MotorController frontLeftMotor = new WPI_VictorSPX(FRONT_LEFT_MOTOR_ID);
+  private final MotorController frontRightMotor = new WPI_VictorSPX(FRONT_RIGHT_MOTOR_ID);
+  private final MotorController backLeftMotor = new WPI_VictorSPX(BACK_LEFT_MOTOR_ID);
+  private final MotorController backRightMotor = new WPI_VictorSPX(BACK_RIGHT_MOTOR_ID);
   private final MotorControllerGroup leftMotorGroup = new MotorControllerGroup(frontLeftMotor, backLeftMotor);
   private final MotorControllerGroup rightMotorGroup = new MotorControllerGroup(frontRightMotor, backRightMotor);
   private final DifferentialDrive diffDrive = new DifferentialDrive(leftMotorGroup, rightMotorGroup);
@@ -30,7 +32,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void tankDrive(double leftSpeed, double rightSpeed) {
-    diffDrive.tankDrive(leftSpeed , rightSpeed * 0.8);
+    diffDrive.tankDrive(leftSpeed , rightSpeed);
   }
 
   public void arcadeDrive(double speed, double rotation) {

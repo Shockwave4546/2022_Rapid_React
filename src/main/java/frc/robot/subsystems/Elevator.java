@@ -1,16 +1,29 @@
 package frc.robot.subsystems;
 
+import static frc.robot.Constants.*;
+
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ElevatorSubsystem extends SubsystemBase {
-  private final MotorController motor = null;
+public class Elevator extends SubsystemBase {
+  private final MotorController belt = new WPI_VictorSPX(ELEVATOR_BELT_MOTOR_ID);
+  private final MotorController kickout = new WPI_VictorSPX(ELEVATOR_KICKOUT_MOTOR_ID);
   
-  public void setSpeed(double speed) {
-    motor.set(speed);
+  public void setBeltSpeed(double speed) {
+    belt.set(speed);
   }
 
-  public void stop() {
-    motor.set(0);
+  public void stopBelt() {
+    belt.stopMotor();
+  }
+
+  public void setKickoutSpeed(double speed) {
+    kickout.set(speed);
+  }
+
+  public void stopKickout() {
+    kickout.stopMotor();
   }
 }
