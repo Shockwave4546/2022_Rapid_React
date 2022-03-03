@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
@@ -18,6 +19,11 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-
+    
+  }
+  
+  public void initCameras() {
+    CameraServer.startAutomaticCapture();
+    CameraServer.startAutomaticCapture();
   }
 }
