@@ -1,14 +1,13 @@
-package frc.robot.commands;
+package frc.robot.drivetrain;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Drivetrain;
 
-public class DriveDistanceCommand extends CommandBase {
+public class DriveDistance extends CommandBase {
   private final double distance; // inches
   private final double speed; 
   private final Drivetrain drive;
 
-  public DriveDistanceCommand(double distance, double speed, Drivetrain drive) {
+  public DriveDistance(double distance, double speed, Drivetrain drive) {
     this.distance = distance;
     this.speed = speed;
     this.drive = drive;
@@ -25,7 +24,7 @@ public class DriveDistanceCommand extends CommandBase {
   }
 
   @Override public void end(boolean interrupted) {
-    drive.tankDrive(0, 0);
+    drive.stop();
   }
 
   @Override public boolean isFinished() {

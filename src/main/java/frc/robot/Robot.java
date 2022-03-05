@@ -4,15 +4,15 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends TimedRobot {
-  private final RobotContainer robotContainer = new RobotContainer();
+  private final RobotContainer container = new RobotContainer();
 
   @Override public void robotInit() {
-    robotContainer.initCameras();
+    container.initCameras();
   }
 
   @Override public void robotPeriodic() {
     CommandScheduler.getInstance().run();
-    robotContainer.telemetry.updateData();
+    container.telemetry.updateData();
   }
 
   @Override public void disabledInit() {

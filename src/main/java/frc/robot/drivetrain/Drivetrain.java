@@ -1,10 +1,11 @@
-package frc.robot.subsystems;
+package frc.robot.drivetrain;
 
 import static frc.robot.Constants.*;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
@@ -25,10 +26,12 @@ public class Drivetrain extends SubsystemBase {
   private final MotorControllerGroup rightMotorGroup = new MotorControllerGroup(frontRightMotor, backRightMotor);
   private final DifferentialDrive diffDrive = new DifferentialDrive(leftMotorGroup, rightMotorGroup);
 
-  public Drivetrain() {
+  public Drivetrain(XboxController driveController) {
     rightMotorGroup.setInverted(true);
     leftEncoder.setDistancePerPulse((Math.PI * WHEEL_DIAMETER_INCH) / COUNTS_PER_REVOLUTION);
     rightEncoder.setDistancePerPulse((Math.PI * WHEEL_DIAMETER_INCH) / COUNTS_PER_REVOLUTION);
+    // TODO: God knows if this works how I want it to
+    setDefaultCommand(new ControllerDrive(driveController, this));
   }
 
   public void tankDrive(double leftSpeed, double rightSpeed) {

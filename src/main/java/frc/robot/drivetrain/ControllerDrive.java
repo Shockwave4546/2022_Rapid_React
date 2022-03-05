@@ -1,14 +1,13 @@
-package frc.robot.commands;
+package frc.robot.drivetrain;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Drivetrain;
 
-public class ControllerDriveCommand extends CommandBase {
+public class ControllerDrive extends CommandBase {
   private final XboxController controller;
   private final Drivetrain drive;
 
-  public ControllerDriveCommand(XboxController controller, Drivetrain drive) {
+  public ControllerDrive(XboxController controller, Drivetrain drive) {
     this.controller = controller;
     this.drive = drive;
     addRequirements(drive);

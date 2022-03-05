@@ -1,6 +1,12 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+
 public final class Constants {
+  // Shuffleboard
+  public static final ShuffleboardTab MAIN_TAB = Shuffleboard.getTab("Main");
+
   // Drivetrain
   public static final int COUNTS_PER_REVOLUTION = 8192;
   public static final int WHEEL_DIAMETER_INCH = 6;
@@ -18,13 +24,20 @@ public final class Constants {
   // Intake
   public static final int INTAKE_ROLLER_MOTOR_ID = 5;
   public static final int INTAKE_PIVOT_MOTOR_ID = 6;
+  public static final double DEFAULT_INTAKE_SPEED = 0.75;
+
+  public static final int TOP_LIMIT_SWITCH = 4;
+  public static final int BOTTOM_LIMIT_SWITCH = 5;
 
   // Elevator
   public static final int ELEVATOR_BELT_MOTOR_ID = 7;
-  public static final int ELEVATOR_KICKOUT_MOTOR_ID = 8;
+  public static final int ELEVATOR_TRAP_MOTOR_ID = 8;
+  public static final double DEFAULT_ELEVATOR_BELT_SPEED = 0.6;
+  public static final double DEFAULT_ELEVATOR_TRAP_SPEED = 0.75;
 
   // Score
-  public static final int SCORE_ROLLER_MOTOR_ID = 9;
+  public static final int SHOOTER_KICKOUT_ROLLER_ID = 9;
+  public static final double DEFAULT_SHOOTER_SPEED = 0.75;
 
   // Controller Ports
   public static final int DRIVE_CONTROLLER_PORT = 0;

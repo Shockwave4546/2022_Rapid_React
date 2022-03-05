@@ -1,23 +1,24 @@
 package frc.robot.subsystems;
 
-import static frc.robot.Constants.*;
+import static frc.robot.Constants.DEFAULT_INTAKE_SPEED;
+import static frc.robot.Constants.INTAKE_ROLLER_MOTOR_ID;
+import static frc.robot.Constants.MAIN_TAB;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.motor.MotorConfig;
+import frc.robot.motor.SimpleMotorSubsystem;
 
-public class Intake extends SubsystemBase {
-  private final MotorController roller = new CANSparkMax(INTAKE_ROLLER_MOTOR_ID, MotorType.kBrushless);
-  private final MotorController pivot = new WPI_VictorSPX(INTAKE_PIVOT_MOTOR_ID);
-
-  public void setRollerSpeed(double speed) {
-    roller.set(speed);
-  }
-
-  public void stopRoller() {
-    roller.stopMotor();
+public class Intake extends SimpleMotorSubsystem {
+  public Intake() {
+    super(
+      MAIN_TAB,
+      new MotorConfig(
+        new CANSparkMax(INTAKE_ROLLER_MOTOR_ID, MotorType.kBrushless), 
+        "Intake Speed",
+        DEFAULT_INTAKE_SPEED
+      )
+    );
   }
 };
