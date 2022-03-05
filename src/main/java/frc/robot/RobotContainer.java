@@ -3,11 +3,7 @@ package frc.robot;
 import static frc.robot.Constants.*;
 
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Button;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.controller.ShockwaveController;
-import frc.robot.drivetrain.ControllerDrive;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.intakepivot.IntakePivot;
 import frc.robot.subsystems.Elevator;
