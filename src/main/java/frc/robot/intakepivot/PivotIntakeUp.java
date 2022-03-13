@@ -2,13 +2,16 @@ package frc.robot.intakepivot;
 
 import frc.robot.motor.SimpleMotorCommand;
 
-public class PivotIntakeUp extends SimpleMotorCommand {
+public class PivotIntakeUp extends SimpleMotorCommand<IntakePivot> {
   public PivotIntakeUp(IntakePivot intakePivot) {
-    super(intakePivot, true);
+    super(intakePivot, false);
   }
 
-  // TODO: Ensure that the off condition on this is false, otherwise just negate the boolean
+  @Override public void initCommand() {
+    subsystem.resetEncoder();
+  }
+
   @Override public boolean isFinished() {
-    return ((IntakePivot) subsystem).getTopLimitSwitch();
+    return Math.abs(subsystem.encoder.getPosition()) >= 5;
   }
 }

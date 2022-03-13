@@ -13,6 +13,7 @@ public class Robot extends TimedRobot {
   @Override public void robotPeriodic() {
     CommandScheduler.getInstance().run();
     container.telemetry.updateData();
+    container.intakePivot.print();
   }
 
   @Override public void disabledInit() {

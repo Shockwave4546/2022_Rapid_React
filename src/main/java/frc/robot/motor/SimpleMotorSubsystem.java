@@ -1,17 +1,18 @@
 package frc.robot.motor;
 
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public abstract class SimpleMotorSubsystem extends SubsystemBase {
-  private final MotorConfig[] configs;
+  protected final MotorConfig[] configs;
 
   public SimpleMotorSubsystem(ShuffleboardTab tab, MotorConfig... configs) {
     this.configs = configs;
-
-    for (final var config : configs) {
+    
+    for (var config : configs) {
       if (tab == null || config.name == null) return;
-      final var speedWidget = tab.addPersistent(config.name, config.defaultSpeed);
+      final var speedWidget = tab.addPersistent(config.name, config.defaultSpeed).withWidget(BuiltInWidgets.kNumberSlider);
       final var coords = config.coords;
       if (coords != null) speedWidget.withPosition(coords.x, coords.y);
       config.speedEntry = speedWidget.getEntry();
