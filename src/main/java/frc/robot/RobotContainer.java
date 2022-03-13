@@ -16,9 +16,9 @@ public class RobotContainer {
   protected final TelemetryManager telemetry = new TelemetryManager();
   private final ShockwaveController driveController = new ShockwaveController(DRIVE_CONTROLLER_PORT);
   private final ShockwaveController operatorController = new ShockwaveController(OPERATOR_CONTROLLER_PORT);
-  // private final Drivetrain drive = new Drivetrain(driveController);
-  // private final Elevator elevator = new Elevator();
-  // private final Intake intake = new Intake();
+  private final Drivetrain drive = new Drivetrain(driveController);
+  private final Elevator elevator = new Elevator();
+  private final Intake intake = new Intake();
   public final IntakePivot intakePivot = new IntakePivot();
 
   public RobotContainer() {
