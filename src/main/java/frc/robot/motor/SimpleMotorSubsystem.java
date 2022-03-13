@@ -12,7 +12,7 @@ public abstract class SimpleMotorSubsystem extends SubsystemBase {
     
     for (var config : configs) {
       if (tab == null || config.name == null) return;
-      final var speedWidget = tab.addPersistent(config.name, config.defaultSpeed).withWidget(BuiltInWidgets.kNumberSlider);
+      final var speedWidget = tab.add(config.name, config.defaultSpeed).withWidget(BuiltInWidgets.kNumberSlider);
       final var coords = config.coords;
       if (coords != null) speedWidget.withPosition(coords.x, coords.y);
       config.speedEntry = speedWidget.getEntry();
@@ -27,7 +27,7 @@ public abstract class SimpleMotorSubsystem extends SubsystemBase {
     for (final var config : configs) {
       final var speed = config.speedEntry.getDouble(0.0);
       config.controller.set(inverted ? -1 * speed : speed);
-    }
+    } 
   }
 
   public void stopMotors() {

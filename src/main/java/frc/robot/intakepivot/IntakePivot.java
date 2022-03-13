@@ -15,7 +15,11 @@ public class IntakePivot extends SimpleMotorSubsystem {
   public IntakePivot() {
     super(
       MAIN_TAB,
-      new MotorConfig(new CANSparkMax(INTAKE_PIVOT_MOTOR_ID, MotorType.kBrushless), "Intake pivot", 0.6)
+      new MotorConfig(
+        new CANSparkMax(INTAKE_PIVOT_MOTOR_ID, MotorType.kBrushless), 
+        "Intake pivot", 
+        DEFAULT_INTAKE_PIVOT_SPEED
+      )
     );
 
     this.encoder = ((CANSparkMax) configs[0].controller).getEncoder();;

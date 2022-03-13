@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -7,13 +8,14 @@ public class Robot extends TimedRobot {
   private final RobotContainer container = new RobotContainer();
 
   @Override public void robotInit() {
-    container.initCameras();
+    CameraServer.startAutomaticCapture();
+    CameraServer.startAutomaticCapture();
   }
 
   @Override public void robotPeriodic() {
     CommandScheduler.getInstance().run();
     container.telemetry.updateData();
-    container.intakePivot.print();
+    container.debug();
   }
 
   @Override public void disabledInit() {

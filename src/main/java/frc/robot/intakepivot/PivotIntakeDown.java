@@ -11,6 +11,7 @@ public class PivotIntakeDown extends SimpleMotorCommand<IntakePivot> {
     subsystem.resetEncoder();
   }
 
+  // 1 spin = 20 "positions"
   @Override public boolean isFinished() {
     return Math.abs(subsystem.encoder.getPosition()) >= 5;
   }
