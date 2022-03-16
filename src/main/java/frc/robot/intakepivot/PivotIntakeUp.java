@@ -12,6 +12,6 @@ public class PivotIntakeUp extends SimpleMotorCommand<IntakePivot> {
   }
 
   @Override public boolean isFinished() {
-    return Math.abs(subsystem.encoder.getPosition()) >= 5;
+    return Math.abs(subsystem.encoder.getPosition()) >= 183;
   }
 }

@@ -35,10 +35,10 @@ public class RobotContainer {
   }
 
   private void initButtonBindings() {
-    // MAIN_TAB.add("Run intake", new RunMotorCommand(intake));
-    // MAIN_TAB.add("Run elevator", new RunMotorCommand(elevator));
-    // MAIN_TAB.add("Run elevator backward", new RunMotorInvertedCommand(elevator));
-    // MAIN_TAB.add("Run shooter", new RunMotorCommand(shooter));
+    MAIN_TAB.add("Run intake", new RunMotorCommand(intake));
+    MAIN_TAB.add("Run elevator", new RunMotorCommand(elevator));
+    MAIN_TAB.add("Run elevator backward", new RunMotorInvertedCommand(elevator));
+    MAIN_TAB.add("Run shooter", new RunMotorCommand(shooter));
     MAIN_TAB.add("Run Intake pivot", new RunMotorCommand(intakePivot));
     MAIN_TAB.add("Run Intake pivot inverted", new RunMotorInvertedCommand(intakePivot));
     MAIN_TAB.add(new PivotIntakeDown(intakePivot));

@@ -13,6 +13,6 @@ public class PivotIntakeDown extends SimpleMotorCommand<IntakePivot> {
 
   // 1 spin = 20 "positions"
   @Override public boolean isFinished() {
-    return Math.abs(subsystem.encoder.getPosition()) >= 5;
+    return Math.abs(subsystem.encoder.getPosition()) >= 187;
   }
 }
