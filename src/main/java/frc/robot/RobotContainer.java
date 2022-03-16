@@ -8,7 +8,6 @@ import frc.robot.drivetrain.Drivetrain;
 import frc.robot.intakepivot.IntakePivot;
 import frc.robot.intakepivot.PivotIntakeDown;
 import frc.robot.intakepivot.PivotIntakeUp;
-import frc.robot.intakepivot.ResetEncoderCount;
 import frc.robot.motor.RunMotorCommand;
 import frc.robot.motor.RunMotorInvertedCommand;
 import frc.robot.subsystems.Elevator;
@@ -30,10 +29,6 @@ public class RobotContainer {
     initControllerBindings();
   }
 
-  public void debug() {
-    intakePivot.print();
-  }
-
   private void initButtonBindings() {
     MAIN_TAB.add("Run intake", new RunMotorCommand(intake));
     MAIN_TAB.add("Run elevator", new RunMotorCommand(elevator));
@@ -43,7 +38,6 @@ public class RobotContainer {
     MAIN_TAB.add("Run Intake pivot inverted", new RunMotorInvertedCommand(intakePivot));
     MAIN_TAB.add(new PivotIntakeDown(intakePivot));
     MAIN_TAB.add(new PivotIntakeUp(intakePivot));
-    MAIN_TAB.add("Reset encoder", new ResetEncoderCount(intakePivot));
   }
 
   private void initControllerBindings() {

@@ -12,9 +12,11 @@ public final class Constants {
   public static final double DEFAULT_INTAKE_PIVOT_SPEED = 0.1;
 
   // Shuffleboard
-  public static final ShuffleboardTab MAIN_TAB = Shuffleboard.getTab("Main");
+  public static final ShuffleboardTab SPEEDS_TAB = Shuffleboard.getTab("Speeds");
+  public static final ShuffleboardTab MATCH_TAB = Shuffleboard.getTab("Match");
+  public static final ShuffleboardTab MAIN_TAB = Shuffleboard.getTab("Test");
 
-  // Drivetrain
+  // Drivetraint
   public static final int COUNTS_PER_REVOLUTION = 8192;
   public static final int WHEEL_DIAMETER_INCH = 6;
   

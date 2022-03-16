@@ -10,7 +10,7 @@ import frc.robot.motor.SimpleMotorSubsystem;
 public class Elevator extends SimpleMotorSubsystem {
   public Elevator() {
     super(
-      MAIN_TAB, 
+      SPEEDS_TAB, 
       new MotorConfig(
         new WPI_VictorSPX(ELEVATOR_BELT_MOTOR_ID),
         "Elevator Belt Speed",
@@ -18,7 +18,7 @@ public class Elevator extends SimpleMotorSubsystem {
       ),
       new MotorConfig(
         new WPI_VictorSPX(ELEVATOR_TRAP_MOTOR_ID),
-        "Elevator Kickout Speed",
+        "Elevator Trap Speed",
         DEFAULT_ELEVATOR_TRAP_SPEED
       )
     );
