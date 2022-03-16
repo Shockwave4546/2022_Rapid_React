@@ -10,7 +10,7 @@ import frc.robot.motor.SimpleMotorSubsystem;
 public class Shooter extends SimpleMotorSubsystem {
   public Shooter() {
     super(
-      MAIN_TAB,
+      SPEEDS_TAB,
       new MotorConfig(
         new WPI_VictorSPX(SHOOTER_KICKOUT_ROLLER_ID),
         "Shooter Speed",
