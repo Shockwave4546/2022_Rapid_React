@@ -1,5 +1,7 @@
 package frc.robot.motor;
 
+import com.fasterxml.jackson.databind.cfg.ConfigFeature;
+
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -25,7 +27,7 @@ public abstract class SimpleMotorSubsystem extends SubsystemBase {
 
   public void runMotors(boolean inverted) {
     for (final var config : configs) {
-      final var speed = config.speedEntry.getDouble(0.0);
+      final var speed = config.speedEntry == null ? config.defaultSpeed : config.speedEntry.getDouble(0.0);
       config.controller.set(inverted ? -1 * speed : speed);
     } 
   }

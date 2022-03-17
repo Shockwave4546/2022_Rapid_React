@@ -22,8 +22,8 @@ public class MotorConfig {
     this(controller, name, defaultSpeed, null);
   }
 
-  // In case, you don't need a adjustable speed
-  public MotorConfig(MotorController controller) {
-    this(controller, null, 0.0, null);
+  // In case, you don't need a adjustable speed--STILL NEEDS A DEFAULT
+  public MotorConfig(MotorController controller, double defaultSpeed) {
+    this(controller, null, defaultSpeed, null);
   }
 }

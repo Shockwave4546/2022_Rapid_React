@@ -12,7 +12,7 @@ public class Shooter extends SimpleMotorSubsystem {
     super(
       SPEEDS_TAB,
       new MotorConfig(
-        new WPI_VictorSPX(SHOOTER_KICKOUT_ROLLER_ID),
+        new WPI_VictorSPX(SHOOTER_KICKOUT_MOTOR_ID),
         "Shooter Speed",
         DEFAULT_SHOOTER_SPEED
       )
