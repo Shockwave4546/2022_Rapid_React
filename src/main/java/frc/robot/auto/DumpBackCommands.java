@@ -1,9 +1,6 @@
 package frc.robot.auto;
 
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandGroupBase;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.drivetrain.DriveTime;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.intakepivot.IntakePivot;
@@ -17,8 +14,8 @@ public class DumpBackCommands extends ParallelCommandGroup {
   public DumpBackCommands(Shooter shooter, Elevator elevator, Drivetrain drive, IntakePivot intakePivot) {
     addCommands(
       new PivotIntakeDown(intakePivot),
-      new RunMotorInvertedCommand(shooter), // dump
-      new RunMotorCommand(elevator), // elevator
+      new RunMotorInvertedCommand(shooter, 15000), // dump
+      new RunMotorCommand(elevator, 15000), // elevator
       new DriveTime(5500, -0.65, drive) // drive back for 4 seconds--CHECK THIS
     );
   }

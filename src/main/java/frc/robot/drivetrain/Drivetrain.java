@@ -43,18 +43,11 @@ public class Drivetrain extends SubsystemBase {
   public Drivetrain(XboxController controller) {
     this.controller = controller;
     leftMotorGroup.setInverted(true); 
-    // rightMotorGroup.setInverted(true);
     leftEncoder.setDistancePerPulse((Math.PI * WHEEL_DIAMETER_INCH) / COUNTS_PER_REVOLUTION);
     rightEncoder.setDistancePerPulse((Math.PI * WHEEL_DIAMETER_INCH) / COUNTS_PER_REVOLUTION);
-    // TODO: God knows if this works how I want it to
-    // diffDrive.setSafetyEnabled(false);
-
-    MAIN_TAB.add(diffDrive);
   }
 
   public void tankDrive(double leftSpeed, double rightSpeed) {
-    System.out.println("Left: " + leftSpeed);
-    System.out.println("Right: " + rightSpeed);
     diffDrive.tankDrive(leftSpeed * leftSpeedMultipler.getDouble(0.75), rightSpeed * rightSpeedMultipler.getDouble(0.75));
   }
 

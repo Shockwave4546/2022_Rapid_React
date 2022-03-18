@@ -47,7 +47,6 @@ public class RobotContainer {
     final var dumpDriveback = new DumpBackCommands(shooter, elevator, drive, intakePivot);
     final var driveBack = new DriveBackCommand(drive, intakePivot);
     final var dumpDriveDump = new DumpBackDumpCommands(shooter, elevator, drive, intakePivot, intake);
-    // autoChooser.setDefaultOption("Dump + Drive Back", dumpDriveback);
     autoChooser.addOption("Dump + Drive back", dumpDriveback);
     autoChooser.addOption("Drive back", driveBack);
     autoChooser.addOption("Dump + Drive + Dump", dumpDriveDump);
