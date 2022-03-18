@@ -5,11 +5,11 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 public final class Constants {
   // Default speeds
-  public static final double DEFAULT_INTAKE_SPEED = 0.75;
+  public static final double DEFAULT_INTAKE_SPEED = 0.5;
   public static final double DEFAULT_SHOOTER_SPEED = 0.75;
   public static final double DEFAULT_ELEVATOR_BELT_SPEED = 0.6;
   public static final double DEFAULT_ELEVATOR_TRAP_SPEED = 0.75;
-  public static final double DEFAULT_INTAKE_PIVOT_SPEED = 0.1;
+  public static final double DEFAULT_INTAKE_PIVOT_SPEED = 0.3;
 
   // Shuffleboard
   public static final ShuffleboardTab SPEEDS_TAB = Shuffleboard.getTab("Speeds");

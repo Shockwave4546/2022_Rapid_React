@@ -1,6 +1,6 @@
 package frc.robot.motor;
 
-import com.fasterxml.jackson.databind.cfg.ConfigFeature;
+import java.util.Map;
 
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -14,7 +14,7 @@ public abstract class SimpleMotorSubsystem extends SubsystemBase {
     
     for (var config : configs) {
       if (tab == null || config.name == null) return;
-      final var speedWidget = tab.add(config.name, config.defaultSpeed).withWidget(BuiltInWidgets.kNumberSlider);
+      final var speedWidget = tab.add(config.name, config.defaultSpeed).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", -1.0, "max", 1.0));
       final var coords = config.coords;
       if (coords != null) speedWidget.withPosition(coords.x, coords.y);
       config.speedEntry = speedWidget.getEntry();

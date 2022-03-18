@@ -2,7 +2,12 @@ package frc.robot;
 
 import static frc.robot.Constants.*;
 
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.controller.ShockwaveController;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.intakepivot.IntakePivot;
@@ -15,7 +20,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 
 public class RobotContainer {
-  protected final TelemetryManager telemetry = new TelemetryManager();
+  // protected final TelemetryManager telemetry = new TelemetryManager();
   private final ShockwaveController driveController = new ShockwaveController(DRIVE_CONTROLLER_PORT);
   private final ShockwaveController operatorController = new ShockwaveController(OPERATOR_CONTROLLER_PORT);
   private final Drivetrain drive = new Drivetrain(driveController);
@@ -25,6 +30,7 @@ public class RobotContainer {
   private final Shooter shooter = new Shooter();
 
   public RobotContainer() {
+    
     initButtonBindings();
     initControllerBindings();
   }
@@ -41,6 +47,12 @@ public class RobotContainer {
   }
 
   private void initControllerBindings() {
-    driveController.toggleWhenPressed(Button.kA, new RunMotorCommand(elevator));
+    new Trigger(() -> operatorController.getLeftTriggerAxis() > 0.2).whileActiveContinuous(new RunMotorInvertedCommand(intakePivot));
+    new Trigger(() -> operatorController.getRightTriggerAxis() > 0.2).whileActiveContinuous(new RunMotorCommand(intakePivot));
+    operatorController.whileHeld(Button.kRightBumper, new RunMotorCommand(intake));
+    operatorController.whileHeld(Button.kLeftBumper, new RunMotorCommand(elevator));
+    operatorController.whileHeld(Button.kA, new RunMotorInvertedCommand(shooter));
+    operatorController.whileHeld(Button.kB, new RunMotorInvertedCommand(elevator));
+    operatorController.whileHeld(Button.kX, new RunMotorInvertedCommand(intake));
   }
 }

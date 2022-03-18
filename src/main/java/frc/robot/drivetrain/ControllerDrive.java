@@ -18,7 +18,7 @@ public class ControllerDrive extends CommandBase {
   }
 
   @Override public void execute() {
-    drive.tankDrive(controller.getRightY(), controller.getLeftY());
+    drive.tankDrive(controller.getLeftY(), controller.getRightY());
   }
 
   @Override

@@ -2,13 +2,17 @@ package frc.robot.drivetrain;
 
 import static frc.robot.Constants.*;
 
+import java.util.Map;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drivetrain extends SubsystemBase {
@@ -16,6 +20,15 @@ public class Drivetrain extends SubsystemBase {
   frontLeft     frontRight
   backLeft      backRight
   */
+
+  private final NetworkTableEntry rightSpeedMultipler = MAIN_TAB.add("Right Speed Multipler ", 0.5)
+    .withWidget(BuiltInWidgets.kNumberSlider)
+    .withProperties(Map.of("min", -1.0, "max", 1.0))
+    .getEntry();
+  private final NetworkTableEntry leftSpeedMultipler = MAIN_TAB.add("Left Speed Multipler ", 0.5)
+    .withWidget(BuiltInWidgets.kNumberSlider)
+    .withProperties(Map.of("min", -1.0, "max", 1.0))
+    .getEntry();
   private final Encoder leftEncoder = new Encoder(DRIVETRAIN_LEFT_ENCODER_A, DRIVETRAIN_LEFT_ENCODER_B);
   private final Encoder rightEncoder = new Encoder(DRIVETRAIN_RIGHT_ENCODER_A, DRIVETRAIN_RIGHT_ENCODER_B);
   private final MotorController frontLeftMotor = new WPI_VictorSPX(DRIVETRAIN_FRONT_LEFT_MOTOR_ID);
@@ -26,20 +39,18 @@ public class Drivetrain extends SubsystemBase {
   private final MotorControllerGroup rightMotorGroup = new MotorControllerGroup(frontRightMotor, backRightMotor);
   private final DifferentialDrive diffDrive = new DifferentialDrive(leftMotorGroup, rightMotorGroup);
 
-  public Drivetrain(XboxController driveController) {
-    rightMotorGroup.setInverted(true);
+  public Drivetrain(XboxController driveController) {   
+    leftMotorGroup.setInverted(true); 
+    // rightMotorGroup.setInverted(true);
     leftEncoder.setDistancePerPulse((Math.PI * WHEEL_DIAMETER_INCH) / COUNTS_PER_REVOLUTION);
     rightEncoder.setDistancePerPulse((Math.PI * WHEEL_DIAMETER_INCH) / COUNTS_PER_REVOLUTION);
     // TODO: God knows if this works how I want it to
     setDefaultCommand(new ControllerDrive(driveController, this));
+    diffDrive.setSafetyEnabled(false);
   }
 
   public void tankDrive(double leftSpeed, double rightSpeed) {
-    diffDrive.tankDrive(leftSpeed, rightSpeed);
-  }
-
-  public void arcadeDrive(double speed, double rotation) {
-    diffDrive.arcadeDrive(speed, rotation);
+    diffDrive.tankDrive(leftSpeed * leftSpeedMultipler.getDouble(0.0), rightSpeed * rightSpeedMultipler.getDouble(0.0));
   }
 
   public void resetEncoders() {

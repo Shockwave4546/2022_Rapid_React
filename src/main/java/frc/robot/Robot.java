@@ -14,7 +14,7 @@ public class Robot extends TimedRobot {
 
   @Override public void robotPeriodic() {
     CommandScheduler.getInstance().run();
-    container.telemetry.updateData();
+    // container.telemetry.updateData();
   }
 
   @Override public void disabledInit() {
