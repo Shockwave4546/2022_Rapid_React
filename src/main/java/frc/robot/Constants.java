@@ -9,7 +9,7 @@ public final class Constants {
   public static final double DEFAULT_SHOOTER_SPEED = 0.75;
   public static final double DEFAULT_ELEVATOR_BELT_SPEED = 0.6;
   public static final double DEFAULT_ELEVATOR_TRAP_SPEED = 0.75;
-  public static final double DEFAULT_INTAKE_PIVOT_SPEED = 0.3;
+  public static final double DEFAULT_INTAKE_PIVOT_SPEED = 0.4;
 
   // Shuffleboard
   public static final ShuffleboardTab SPEEDS_TAB = Shuffleboard.getTab("Speeds");

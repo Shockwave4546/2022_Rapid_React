@@ -34,7 +34,7 @@ public class Robot extends TimedRobot {
   }
     
   @Override public void teleopInit() {
-
+    container.drive.setDefaultCommand();
   }
 
   @Override public void teleopPeriodic() {

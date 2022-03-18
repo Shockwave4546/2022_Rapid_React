@@ -21,11 +21,11 @@ public class Drivetrain extends SubsystemBase {
   backLeft      backRight
   */
 
-  private final NetworkTableEntry rightSpeedMultipler = MAIN_TAB.add("Right Speed Multipler ", 0.5)
+  private final NetworkTableEntry rightSpeedMultipler = MAIN_TAB.add("Right Speed Multipler ", 0.75)
     .withWidget(BuiltInWidgets.kNumberSlider)
     .withProperties(Map.of("min", -1.0, "max", 1.0))
     .getEntry();
-  private final NetworkTableEntry leftSpeedMultipler = MAIN_TAB.add("Left Speed Multipler ", 0.5)
+  private final NetworkTableEntry leftSpeedMultipler = MAIN_TAB.add("Left Speed Multipler ", 0.75)
     .withWidget(BuiltInWidgets.kNumberSlider)
     .withProperties(Map.of("min", -1.0, "max", 1.0))
     .getEntry();
@@ -38,19 +38,28 @@ public class Drivetrain extends SubsystemBase {
   private final MotorControllerGroup leftMotorGroup = new MotorControllerGroup(frontLeftMotor, backLeftMotor);
   private final MotorControllerGroup rightMotorGroup = new MotorControllerGroup(frontRightMotor, backRightMotor);
   private final DifferentialDrive diffDrive = new DifferentialDrive(leftMotorGroup, rightMotorGroup);
+  private final XboxController controller;
 
-  public Drivetrain(XboxController driveController) {   
+  public Drivetrain(XboxController controller) {
+    this.controller = controller;
     leftMotorGroup.setInverted(true); 
     // rightMotorGroup.setInverted(true);
     leftEncoder.setDistancePerPulse((Math.PI * WHEEL_DIAMETER_INCH) / COUNTS_PER_REVOLUTION);
     rightEncoder.setDistancePerPulse((Math.PI * WHEEL_DIAMETER_INCH) / COUNTS_PER_REVOLUTION);
     // TODO: God knows if this works how I want it to
-    setDefaultCommand(new ControllerDrive(driveController, this));
-    diffDrive.setSafetyEnabled(false);
+    // diffDrive.setSafetyEnabled(false);
+
+    MAIN_TAB.add(diffDrive);
   }
 
   public void tankDrive(double leftSpeed, double rightSpeed) {
-    diffDrive.tankDrive(leftSpeed * leftSpeedMultipler.getDouble(0.0), rightSpeed * rightSpeedMultipler.getDouble(0.0));
+    System.out.println("Left: " + leftSpeed);
+    System.out.println("Right: " + rightSpeed);
+    diffDrive.tankDrive(leftSpeed * leftSpeedMultipler.getDouble(0.75), rightSpeed * rightSpeedMultipler.getDouble(0.75));
+  }
+
+  public void setDefaultCommand() {
+    setDefaultCommand(new ControllerDrive(controller, this));
   }
 
   public void resetEncoders() {
