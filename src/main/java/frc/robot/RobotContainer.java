@@ -6,8 +6,12 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.auto.DriveBackCommand;
+import frc.robot.auto.DumpBackCommands;
 import frc.robot.controller.ShockwaveController;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.intakepivot.IntakePivot;
@@ -29,10 +33,24 @@ public class RobotContainer {
   private final IntakePivot intakePivot = new IntakePivot();
   private final Shooter shooter = new Shooter();
 
+  final SendableChooser<Command> autoChooser = new SendableChooser<>();
+
   public RobotContainer() {
-    
+    initAuto();
     initButtonBindings();
     initControllerBindings();
+  }
+
+  private void initAuto() {
+    final var dumpDriveback = new DumpBackCommands(shooter, elevator, drive);
+    final var driveBack = new DriveBackCommand(drive);
+    autoChooser.addOption("Dump + Drive back", dumpDriveback);
+    autoChooser.addOption("Drive back", driveBack);
+    MATCH_TAB.add(autoChooser);
+  }
+
+  public void runAuto() {
+    autoChooser.getSelected().schedule();
   }
 
   private void initButtonBindings() {

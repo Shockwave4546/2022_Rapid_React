@@ -13,8 +13,11 @@ public class IntakePivot extends SimpleMotorSubsystem {
   protected final RelativeEncoder encoder;
 
   public IntakePivot() {
-    super(new MotorConfig(
-        new CANSparkMax(INTAKE_PIVOT_MOTOR_ID, MotorType.kBrushless),
+    super(
+      SPEEDS_TAB,
+      new MotorConfig(
+        new CANSparkMax(INTAKE_PIVOT_MOTOR_ID, MotorType.kBrushless), 
+        "Intake Pivot Speed", 
         DEFAULT_INTAKE_PIVOT_SPEED
       )
     );
