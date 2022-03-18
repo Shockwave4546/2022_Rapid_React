@@ -31,12 +31,6 @@ public class DumpBackDumpCommands extends SequentialCommandGroup {
 
       new DriveTime(6000, 0.65, drive),
       new RunMotorInvertedCommand(shooter, 2000)
-
-      // new PivotIntakeDown(intakePivot),
-      // new RunMotorInvertedCommand(shooter), // dump
-      // new RunMotorCommand(elevator), // elevator
-      // new DriveTime(5500, -0.65, drive), // drive back for 4 seconds--CHECK THIS
-      // new RunMotorCommand(intake)
     );
   }
 }
