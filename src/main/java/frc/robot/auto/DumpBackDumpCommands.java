@@ -21,14 +21,16 @@ public class DumpBackDumpCommands extends SequentialCommandGroup {
         new RunMotorCommand(elevator, 2000)
       ),
       new ParallelCommandGroup(
-        new DriveTime(5500, -0.65, drive),
-        new RunMotorCommand(intake, 7500),
-        new RunMotorCommand(elevator, 7500)
-
+        new DriveTime(5000, -0.65, drive),
+        new RunMotorCommand(intake, 6500),
+        new RunMotorCommand(elevator, 4500)
+      ),
+      new ParallelCommandGroup(
+        new DriveTime(5000, 0.75, drive),
+        new RunMotorCommand(elevator, 4000)
       ),
 
-      new DriveTime(6000, 0.65, drive),
-      new RunMotorInvertedCommand(shooter, 2000)
+      new RunMotorInvertedCommand(shooter, 4500)
     );
   }
 }
