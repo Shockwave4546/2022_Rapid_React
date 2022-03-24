@@ -29,6 +29,14 @@ public class Drivetrain extends SubsystemBase {
     .withWidget(BuiltInWidgets.kNumberSlider)
     .withProperties(Map.of("min", -1.0, "max", 1.0))
     .getEntry();
+    private final NetworkTableEntry arcadeSpeedMultiplier = MAIN_TAB.add("Arcade Speed Multipler ", 0.75)
+    .withWidget(BuiltInWidgets.kNumberSlider)
+    .withProperties(Map.of("min", -1.0, "max", 1.0))
+    .getEntry();
+    private final NetworkTableEntry rotationMultiplier = MAIN_TAB.add("Rot Speed Multipler ", 0.75)
+    .withWidget(BuiltInWidgets.kNumberSlider)
+    .withProperties(Map.of("min", -1.0, "max", 1.0))
+    .getEntry();
   private final Encoder leftEncoder = new Encoder(DRIVETRAIN_LEFT_ENCODER_A, DRIVETRAIN_LEFT_ENCODER_B);
   private final Encoder rightEncoder = new Encoder(DRIVETRAIN_RIGHT_ENCODER_A, DRIVETRAIN_RIGHT_ENCODER_B);
   private final MotorController frontLeftMotor = new WPI_VictorSPX(DRIVETRAIN_FRONT_LEFT_MOTOR_ID);
@@ -49,6 +57,10 @@ public class Drivetrain extends SubsystemBase {
 
   public void tankDrive(double leftSpeed, double rightSpeed) {
     diffDrive.tankDrive(leftSpeed * leftSpeedMultipler.getDouble(0.75), rightSpeed * rightSpeedMultipler.getDouble(0.75));
+  }
+
+  public void aracadeDrive(double speed, double rotation) {
+    diffDrive.arcadeDrive(speed * arcadeSpeedMultiplier.getDouble(0.75), rotation * rotationMultiplier.getDouble(0.75));
   }
 
   public void setDefaultCommand() {
