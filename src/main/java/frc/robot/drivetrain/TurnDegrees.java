@@ -22,7 +22,9 @@ public class TurnDegrees extends CommandBase {
   }
 
   @Override public void execute() {
-    drive.tankDrive(clockwise ? speed : 0.0, clockwise ? 0.0 : speed);
+    drive.arcadeDrive(0.0, clockwise ? speed : speed * -1);
+
+    // drive.tankDrive(clockwise ? speed : 0.0, clockwise ? 0.0 : speed);
   }
 
   @Override public void end(boolean interrupted) {

@@ -54,6 +54,11 @@ public class Drivetrain extends SubsystemBase {
     leftMotorGroup.setInverted(true); 
     leftEncoder.setDistancePerPulse((Math.PI * WHEEL_DIAMETER_INCH) / COUNTS_PER_REVOLUTION);
     rightEncoder.setDistancePerPulse((Math.PI * WHEEL_DIAMETER_INCH) / COUNTS_PER_REVOLUTION);
+    TEST_TAB.add(gyro);
+  }
+
+  public void arcadeDrive(double speed, double rotation) {
+    diffDrive.arcadeDrive(speed, rotation);
   }
 
   public void tankDrive(double leftSpeed, double rightSpeed) {
@@ -61,6 +66,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void initTeleop() {
+    
     setDefaultCommand(new TeleopTankDrive(this, controller));
   }
 
