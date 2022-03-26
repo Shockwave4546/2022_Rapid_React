@@ -33,7 +33,7 @@ public class Drivetrain extends SubsystemBase {
   private final AdjustableSpeed rightSpeedMultiplier = new AdjustableSpeed("Right Speed Multiplier", TEST_TAB, DEFAULT_DRIVE_LEFT_MULTIPLIER);
   private final AdjustableSpeed leftSpeedMultiplier = new AdjustableSpeed("Left Speed Multiplier", TEST_TAB, DEFAULT_DRIVE_RIGHT_MULTIPLIER);
 
-  private final AHRS gyro = new AHRS();
+  protected final AHRS gyro = new AHRS();
   private final Encoder leftEncoder = new Encoder(DRIVETRAIN_LEFT_ENCODER_A, DRIVETRAIN_LEFT_ENCODER_B);
   private final Encoder rightEncoder = new Encoder(DRIVETRAIN_RIGHT_ENCODER_A, DRIVETRAIN_RIGHT_ENCODER_B);
   private final WPI_VictorSPX frontLeftMotor = new WPI_VictorSPX(DRIVETRAIN_FRONT_LEFT_MOTOR_ID);
@@ -61,7 +61,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void initTeleop() {
-    setDefaultCommand(new TeleopTankDrive(controller, this));
+    setDefaultCommand(new TeleopTankDrive(this, controller));
   }
 
   public void resetEncoders() {

@@ -7,9 +7,9 @@ public class TeleopTankDrive extends CommandBase {
   private final XboxController controller;
   private final Drivetrain drive;
 
-  public TeleopTankDrive(XboxController controller, Drivetrain drive) {
-    this.controller = controller;
+  public TeleopTankDrive(Drivetrain drive, XboxController controller) {
     this.drive = drive;
+    this.controller = controller;
     addRequirements(drive);
   }
 

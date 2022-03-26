@@ -7,10 +7,10 @@ public class DriveDistance extends CommandBase {
   private final double speed; 
   private final Drivetrain drive;
 
-  public DriveDistance(double distance, double speed, Drivetrain drive) {
+  public DriveDistance(Drivetrain drive, double distance, double speed) {
+    this.drive = drive;
     this.distance = distance;
     this.speed = speed;
-    this.drive = drive;
     addRequirements(drive);
   }
 
