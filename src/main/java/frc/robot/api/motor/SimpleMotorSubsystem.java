@@ -1,10 +1,8 @@
-package frc.robot.motor;
+package frc.robot.api.motor;
 
-import java.util.Map;
-
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.api.shuffleboard.AdjustableSpeed;
 
 public abstract class SimpleMotorSubsystem extends SubsystemBase {
   protected final MotorConfig[] configs;
@@ -14,17 +12,14 @@ public abstract class SimpleMotorSubsystem extends SubsystemBase {
     
     for (var config : configs) {
       if (tab == null || config.name == null) return;
-      final var speedWidget = tab.add(config.name, config.defaultSpeed).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", -1.0, "max", 1.0));
-      final var coords = config.coords;
-      if (coords != null) speedWidget.withPosition(coords.x, coords.y);
-      config.speedEntry = speedWidget.getEntry();
+      config.speedEntry = new AdjustableSpeed(config.name, tab, config.defaultSpeed, config.position).getRaw();
     }
   }
 
   public SimpleMotorSubsystem(MotorConfig... configs) {
     this(null, configs);
   }
-
+  
   public void runMotors(boolean inverted) {
     for (final var config : configs) {
       final var speed = config.speedEntry == null ? config.defaultSpeed : config.speedEntry.getDouble(0.0);

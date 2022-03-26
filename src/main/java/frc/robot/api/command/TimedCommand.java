@@ -1,4 +1,4 @@
-package frc.robot.api;
+package frc.robot.api.command;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -19,7 +19,7 @@ public abstract class TimedCommand extends CommandBase {
     this(Duration.ofSeconds(seconds));
   }
 
-  public abstract void init();
+  public void init() {};
 
   @Override public final void initialize() {
     this.complete = duration == null ? null : Instant.now().plus(duration);

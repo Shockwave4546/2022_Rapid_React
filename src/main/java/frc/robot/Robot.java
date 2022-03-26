@@ -14,38 +14,17 @@ public class Robot extends TimedRobot {
 
   @Override public void robotPeriodic() {
     CommandScheduler.getInstance().run();
-    // container.telemetry.updateData();
-  }
-
-  @Override public void disabledInit() {
-
-  }
-
-  @Override public void disabledPeriodic() {
-
   }
 
   @Override public void autonomousInit() {
-    container.runAuto();
-  }
-
-  @Override public void autonomousPeriodic() {
-
+    container.autoManager.runSelected();
   }
     
   @Override public void teleopInit() {
-    container.drive.setDefaultCommand();
-  }
-
-  @Override public void teleopPeriodic() {
-
+    container.drive.initTeleop();
   }
 
   @Override public void testInit() {
     CommandScheduler.getInstance().cancelAll();
-  }
-
-  @Override public void testPeriodic() {
-
   }
 }

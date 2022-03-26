@@ -1,48 +1,45 @@
 package frc.robot.drivetrain;
 
-import static frc.robot.Constants.*;
+import static frc.robot.Constants.COUNTS_PER_REVOLUTION;
+import static frc.robot.Constants.DEFAULT_DRIVE_LEFT_MULTIPLIER;
+import static frc.robot.Constants.DEFAULT_DRIVE_RIGHT_MULTIPLIER;
+import static frc.robot.Constants.DRIVETRAIN_BACK_LEFT_MOTOR_ID;
+import static frc.robot.Constants.DRIVETRAIN_BACK_RIGHT_MOTOR_ID;
+import static frc.robot.Constants.DRIVETRAIN_FRONT_LEFT_MOTOR_ID;
+import static frc.robot.Constants.DRIVETRAIN_FRONT_RIGHT_MOTOR_ID;
+import static frc.robot.Constants.DRIVETRAIN_LEFT_ENCODER_A;
+import static frc.robot.Constants.DRIVETRAIN_LEFT_ENCODER_B;
+import static frc.robot.Constants.DRIVETRAIN_RIGHT_ENCODER_A;
+import static frc.robot.Constants.DRIVETRAIN_RIGHT_ENCODER_B;
+import static frc.robot.Constants.TEST_TAB;
+import static frc.robot.Constants.WHEEL_DIAMETER_INCH;
 
-import java.util.Map;
-
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.api.shuffleboard.AdjustableSpeed;
 
-public class Drivetrain extends SubsystemBase {
-  /* 
+/* 
   frontLeft     frontRight
   backLeft      backRight
-  */
+*/
+public class Drivetrain extends SubsystemBase {
+  private final AdjustableSpeed rightSpeedMultiplier = new AdjustableSpeed("Right Speed Multiplier", TEST_TAB, DEFAULT_DRIVE_LEFT_MULTIPLIER);
+  private final AdjustableSpeed leftSpeedMultiplier = new AdjustableSpeed("Left Speed Multiplier", TEST_TAB, DEFAULT_DRIVE_RIGHT_MULTIPLIER);
 
-  private final NetworkTableEntry rightSpeedMultipler = MAIN_TAB.add("Right Speed Multipler ", 0.75)
-    .withWidget(BuiltInWidgets.kNumberSlider)
-    .withProperties(Map.of("min", -1.0, "max", 1.0))
-    .getEntry();
-  private final NetworkTableEntry leftSpeedMultipler = MAIN_TAB.add("Left Speed Multipler ", 0.75)
-    .withWidget(BuiltInWidgets.kNumberSlider)
-    .withProperties(Map.of("min", -1.0, "max", 1.0))
-    .getEntry();
-    private final NetworkTableEntry arcadeSpeedMultiplier = MAIN_TAB.add("Arcade Speed Multipler ", 0.75)
-    .withWidget(BuiltInWidgets.kNumberSlider)
-    .withProperties(Map.of("min", -1.0, "max", 1.0))
-    .getEntry();
-    private final NetworkTableEntry rotationMultiplier = MAIN_TAB.add("Rot Speed Multipler ", 0.75)
-    .withWidget(BuiltInWidgets.kNumberSlider)
-    .withProperties(Map.of("min", -1.0, "max", 1.0))
-    .getEntry();
+  private final AHRS gyro = new AHRS();
   private final Encoder leftEncoder = new Encoder(DRIVETRAIN_LEFT_ENCODER_A, DRIVETRAIN_LEFT_ENCODER_B);
   private final Encoder rightEncoder = new Encoder(DRIVETRAIN_RIGHT_ENCODER_A, DRIVETRAIN_RIGHT_ENCODER_B);
-  private final MotorController frontLeftMotor = new WPI_VictorSPX(DRIVETRAIN_FRONT_LEFT_MOTOR_ID);
-  private final MotorController frontRightMotor = new WPI_VictorSPX(DRIVETRAIN_FRONT_RIGHT_MOTOR_ID);
-  private final MotorController backLeftMotor = new WPI_VictorSPX(DRIVETRAIN_BACK_LEFT_MOTOR_ID);
-  private final MotorController backRightMotor = new WPI_VictorSPX(DRIVETRAIN_BACK_RIGHT_MOTOR_ID);
+  private final WPI_VictorSPX frontLeftMotor = new WPI_VictorSPX(DRIVETRAIN_FRONT_LEFT_MOTOR_ID);
+  private final WPI_VictorSPX frontRightMotor = new WPI_VictorSPX(DRIVETRAIN_FRONT_RIGHT_MOTOR_ID);
+  private final WPI_VictorSPX backLeftMotor = new WPI_VictorSPX(DRIVETRAIN_BACK_LEFT_MOTOR_ID);
+  private final WPI_VictorSPX backRightMotor = new WPI_VictorSPX(DRIVETRAIN_BACK_RIGHT_MOTOR_ID);
   private final MotorControllerGroup leftMotorGroup = new MotorControllerGroup(frontLeftMotor, backLeftMotor);
   private final MotorControllerGroup rightMotorGroup = new MotorControllerGroup(frontRightMotor, backRightMotor);
   private final DifferentialDrive diffDrive = new DifferentialDrive(leftMotorGroup, rightMotorGroup);
@@ -50,21 +47,21 @@ public class Drivetrain extends SubsystemBase {
 
   public Drivetrain(XboxController controller) {
     this.controller = controller;
+    frontLeftMotor.setNeutralMode(NeutralMode.Brake);
+    backLeftMotor.setNeutralMode(NeutralMode.Brake);
+    frontRightMotor.setNeutralMode(NeutralMode.Brake);
+    backRightMotor.setNeutralMode(NeutralMode.Brake);
     leftMotorGroup.setInverted(true); 
     leftEncoder.setDistancePerPulse((Math.PI * WHEEL_DIAMETER_INCH) / COUNTS_PER_REVOLUTION);
     rightEncoder.setDistancePerPulse((Math.PI * WHEEL_DIAMETER_INCH) / COUNTS_PER_REVOLUTION);
   }
 
   public void tankDrive(double leftSpeed, double rightSpeed) {
-    diffDrive.tankDrive(leftSpeed * leftSpeedMultipler.getDouble(0.75), rightSpeed * rightSpeedMultipler.getDouble(0.75));
+    diffDrive.tankDrive(leftSpeed * leftSpeedMultiplier.get(), rightSpeed * rightSpeedMultiplier.get());
   }
 
-  public void aracadeDrive(double speed, double rotation) {
-    diffDrive.arcadeDrive(speed * arcadeSpeedMultiplier.getDouble(0.75), rotation * rotationMultiplier.getDouble(0.75));
-  }
-
-  public void setDefaultCommand() {
-    setDefaultCommand(new ControllerDrive(controller, this));
+  public void initTeleop() {
+    setDefaultCommand(new TeleopTankDrive(controller, this));
   }
 
   public void resetEncoders() {

@@ -1,6 +1,6 @@
 package frc.robot.intakepivot;
 
-import frc.robot.motor.SimpleMotorCommand;
+import frc.robot.api.motor.SimpleMotorCommand;
 
 public class PivotIntakeUp extends SimpleMotorCommand<IntakePivot> {
   public PivotIntakeUp(IntakePivot intakePivot) {

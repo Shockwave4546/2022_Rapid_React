@@ -1,13 +1,15 @@
 package frc.robot.intakepivot;
 
-import static frc.robot.Constants.*;
+import static frc.robot.Constants.DEFAULT_INTAKE_PIVOT_SPEED;
+import static frc.robot.Constants.INTAKE_PIVOT_MOTOR_ID;
+import static frc.robot.Constants.SPEEDS_TAB;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder;
 
-import frc.robot.motor.MotorConfig;
-import frc.robot.motor.SimpleMotorSubsystem;
+import frc.robot.api.motor.MotorConfig;
+import frc.robot.api.motor.SimpleMotorSubsystem;
 
 public class IntakePivot extends SimpleMotorSubsystem {
   protected final RelativeEncoder encoder;

@@ -1,11 +1,13 @@
 package frc.robot.subsystems;
 
-import static frc.robot.Constants.*;
+import static frc.robot.Constants.DEFAULT_SHOOTER_SPEED;
+import static frc.robot.Constants.SHOOTER_KICKOUT_MOTOR_ID;
+import static frc.robot.Constants.SPEEDS_TAB;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
-import frc.robot.motor.MotorConfig;
-import frc.robot.motor.SimpleMotorSubsystem;
+import frc.robot.api.motor.MotorConfig;
+import frc.robot.api.motor.SimpleMotorSubsystem;
 
 public class Shooter extends SimpleMotorSubsystem {
   public Shooter() {
