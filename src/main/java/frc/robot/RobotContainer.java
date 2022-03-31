@@ -3,6 +3,7 @@ package frc.robot;
 import static frc.robot.Constants.DRIVE_CONTROLLER_PORT;
 import static frc.robot.Constants.MATCH_TAB;
 import static frc.robot.Constants.OPERATOR_CONTROLLER_PORT;
+import static frc.robot.Constants.SPEEDS_TAB;
 import static frc.robot.Constants.TEST_TAB;
 
 import edu.wpi.first.wpilibj.XboxController.Button;
@@ -10,12 +11,14 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.api.controller.ShockwaveController;
 import frc.robot.api.motor.RunMotor;
 import frc.robot.api.motor.RunMotorInverted;
+import frc.robot.api.shuffleboard.AdjustableSpeed;
 import frc.robot.auto.AutonomousManager;
 import frc.robot.auto.NewTwoBallAuto;
 import frc.robot.auto.OneBallAuto;
 import frc.robot.auto.TaxiAuto;
 import frc.robot.auto.ThreeBallAuto;
 import frc.robot.auto.TwoBallAuto;
+import frc.robot.drivetrain.DriveStraight;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.drivetrain.TurnDegrees;
 import frc.robot.intakepivot.IntakePivot;
@@ -63,6 +66,9 @@ public class RobotContainer {
   }
 
   private void initControllerBindings() {
+    final var speed = new AdjustableSpeed("Constant Speed Value", SPEEDS_TAB, -1.0);
+    new Trigger(() -> driveController.getRightTriggerAxis() > 0.2).whileActiveContinuous(new DriveStraight(drive, speed.get()));
+
     new Trigger(() -> operatorController.getLeftTriggerAxis() > 0.2).whileActiveContinuous(new RunMotorInverted(intakePivot));
     new Trigger(() -> operatorController.getRightTriggerAxis() > 0.2).whileActiveContinuous(new RunMotor(intakePivot));
     operatorController.whileHeld(Button.kRightBumper, new RunMotor(intake));
