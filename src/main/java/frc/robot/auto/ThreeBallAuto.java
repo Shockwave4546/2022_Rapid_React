@@ -26,15 +26,15 @@ public class ThreeBallAuto extends ParallelCommandGroup {
         new DriveStraightTimed(drive, 1, 1350),
         new RunMotor(shooter, 1000),
 
-        new DriveStraightTimed(drive, -1, 500),
+        new DriveStraightTimed(drive, -1, 400),
         new WaitCommand(0.5),
-        new TurnDegrees(drive, -0.65, 50, true),
+        new TurnDegrees(drive, -0.65, 55, true),
         new DriveStraightTimed(drive, -1, 1450),
         new WaitCommand(0.5),
         new DriveStraightTimed(drive, 1, 1250),
         new WaitCommand(0.5),
-        new TurnDegrees(drive, 0.65, 45, true),
-        new DriveStraightTimed(drive, 1, 500),
+        new TurnDegrees(drive, 0.65, 40, true),
+        new DriveStraightTimed(drive, 1, 400),
         new RunMotor(shooter, 1000)
       )
     );

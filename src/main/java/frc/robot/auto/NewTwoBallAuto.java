@@ -21,9 +21,9 @@ public class NewTwoBallAuto extends ParallelCommandGroup {
       new SequentialCommandGroup(
         new PivotIntakeDown(intakePivot),
         new RunMotor(shooter, 1000),
-        new DriveStraightTimed(drive, -1, 1750),
+        new DriveStraightTimed(drive, -1, 1650),
         new WaitCommand(0.5),
-        new DriveStraightTimed(drive, 1, 1750),
+        new DriveStraightTimed(drive, 1, 1650),
         new RunMotor(shooter, 1000)
       )
     );
