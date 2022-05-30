@@ -2,12 +2,12 @@ package frc.robot.auto;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.api.motor.RunMotor;
-import frc.robot.drivetrain.DriveStraightTimed;
-import frc.robot.drivetrain.Drivetrain;
-import frc.robot.intakepivot.IntakePivot;
-import frc.robot.intakepivot.PivotIntakeDown;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.drivetrain.DriveStraightTimed;
+import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.intakepivot.IntakePivot;
+import frc.robot.subsystems.intakepivot.PivotIntakeDown;
 
 public class OneBallAuto extends ParallelCommandGroup {
   public OneBallAuto(Shooter shooter, Elevator elevator, Drivetrain drive, IntakePivot intakePivot) {

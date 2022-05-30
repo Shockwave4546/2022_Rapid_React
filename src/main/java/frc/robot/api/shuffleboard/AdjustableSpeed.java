@@ -10,7 +10,7 @@ public class AdjustableSpeed {
   private final double defaultSpeed;
   private final NetworkTableEntry speedEntry;
 
-  public AdjustableSpeed(String name, ShuffleboardTab tab, double defaultSpeed, Position2D position) {
+  public AdjustableSpeed(String name, ShuffleboardTab tab, double defaultSpeed, Pos2D position) {
     this.defaultSpeed = defaultSpeed;
     final var speedEntry = tab.add(name, defaultSpeed)
       .withWidget(BuiltInWidgets.kNumberSlider)

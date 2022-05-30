@@ -1,4 +1,4 @@
-package frc.robot.drivetrain;
+package frc.robot.subsystems.drivetrain;
 
 import java.time.Duration;
 
@@ -14,7 +14,8 @@ public class DriveStraightTimed extends TimedCommand {
     this.speed = speed;
   }
 
-  @Override public void init() {
+  @Override public void initialize() {
+    super.initialize();
     drive.stop();
   }
 

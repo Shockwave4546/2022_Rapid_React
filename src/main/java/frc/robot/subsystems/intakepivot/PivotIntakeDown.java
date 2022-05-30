@@ -1,4 +1,4 @@
-package frc.robot.intakepivot;
+package frc.robot.subsystems.intakepivot;
 
 import frc.robot.api.motor.SimpleMotorCommand;
 
@@ -7,7 +7,8 @@ public class PivotIntakeDown extends SimpleMotorCommand<IntakePivot> {
     super(intakePivot, true);
   }
 
-  @Override public void initCommand() {
+  @Override public void initialize() {
+    super.initialize();
     subsystem.resetEncoder();
   }
 

@@ -1,29 +1,26 @@
 package frc.robot.subsystems;
 
-import static frc.robot.Constants.DEFAULT_ELEVATOR_BELT_SPEED;
-import static frc.robot.Constants.DEFAULT_ELEVATOR_TRAP_SPEED;
-import static frc.robot.Constants.ELEVATOR_BELT_MOTOR_ID;
-import static frc.robot.Constants.ELEVATOR_TRAP_MOTOR_ID;
-import static frc.robot.Constants.SPEEDS_TAB;
-
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import frc.robot.Constants;
+import frc.robot.Constants.DefaultSpeeds;
+import frc.robot.Constants.Tabs;
 import frc.robot.api.motor.MotorConfig;
 import frc.robot.api.motor.SimpleMotorSubsystem;
 
 public class Elevator extends SimpleMotorSubsystem {
   public Elevator() {
     super(
-      SPEEDS_TAB, 
+      Tabs.SPEEDS, 
       new MotorConfig(
-        new WPI_VictorSPX(ELEVATOR_BELT_MOTOR_ID),
+        new WPI_VictorSPX(Constants.Elevator.BELT_MOTOR_ID),
         "Elevator Belt Speed",
-        DEFAULT_ELEVATOR_BELT_SPEED
+        DefaultSpeeds.ELEVATOR_BELT
       ),
       new MotorConfig(
-        new WPI_VictorSPX(ELEVATOR_TRAP_MOTOR_ID),
+        new WPI_VictorSPX(Constants.Elevator.TRAP_MOTOR_ID),
         "Elevator Trap Speed",
-        DEFAULT_ELEVATOR_TRAP_SPEED
+        DefaultSpeeds.ELEVATOR_TRAP
       )
     );
   }

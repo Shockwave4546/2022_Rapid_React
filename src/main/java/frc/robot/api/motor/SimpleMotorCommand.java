@@ -1,6 +1,6 @@
 package frc.robot.api.motor;
 
-import java.time.temporal.TemporalAmount;
+import java.time.Duration;
 
 import frc.robot.api.command.TimedCommand;
 
@@ -8,7 +8,7 @@ public abstract class SimpleMotorCommand<T extends SimpleMotorSubsystem> extends
   public final T subsystem;
   private final boolean inverted;
 
-  public SimpleMotorCommand(T subsystem, boolean inverted, TemporalAmount duration) {
+  public SimpleMotorCommand(T subsystem, boolean inverted, Duration duration) {
     super(duration);
     this.subsystem = subsystem;
     this.inverted = inverted;
@@ -19,11 +19,9 @@ public abstract class SimpleMotorCommand<T extends SimpleMotorSubsystem> extends
     this(subsystem, inverted, null);
   }
 
-  public void initCommand() {}
-
-  @Override public void init() {
+  @Override public void initialize() {
+    super.initialize();
     subsystem.stopMotors();
-    initCommand();
   }
 
   @Override public void execute() {

@@ -1,18 +1,15 @@
-package frc.robot.drivetrain;
+package frc.robot.subsystems.drivetrain;
 
-import static frc.robot.Constants.COUNTS_PER_REVOLUTION;
-import static frc.robot.Constants.DEFAULT_DRIVE_LEFT_MULTIPLIER;
-import static frc.robot.Constants.DEFAULT_DRIVE_RIGHT_MULTIPLIER;
-import static frc.robot.Constants.DRIVETRAIN_BACK_LEFT_MOTOR_ID;
-import static frc.robot.Constants.DRIVETRAIN_BACK_RIGHT_MOTOR_ID;
-import static frc.robot.Constants.DRIVETRAIN_FRONT_LEFT_MOTOR_ID;
-import static frc.robot.Constants.DRIVETRAIN_FRONT_RIGHT_MOTOR_ID;
-import static frc.robot.Constants.DRIVETRAIN_LEFT_ENCODER_A;
-import static frc.robot.Constants.DRIVETRAIN_LEFT_ENCODER_B;
-import static frc.robot.Constants.DRIVETRAIN_RIGHT_ENCODER_A;
-import static frc.robot.Constants.DRIVETRAIN_RIGHT_ENCODER_B;
-import static frc.robot.Constants.TEST_TAB;
-import static frc.robot.Constants.WHEEL_DIAMETER_INCH;
+import static frc.robot.Constants.Drivetrain.BACK_LEFT_MOTOR_ID;
+import static frc.robot.Constants.Drivetrain.BACK_RIGHT_MOTOR_ID;
+import static frc.robot.Constants.Drivetrain.COUNTS_PER_REVOLUTION;
+import static frc.robot.Constants.Drivetrain.FRONT_LEFT_MOTOR_ID;
+import static frc.robot.Constants.Drivetrain.FRONT_RIGHT_MOTOR_ID;
+import static frc.robot.Constants.Drivetrain.LEFT_ENCODER_A;
+import static frc.robot.Constants.Drivetrain.LEFT_ENCODER_B;
+import static frc.robot.Constants.Drivetrain.RIGHT_ENCODER_A;
+import static frc.robot.Constants.Drivetrain.RIGHT_ENCODER_B;
+import static frc.robot.Constants.Drivetrain.WHEEL_DIAMETER_INCH;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
@@ -23,6 +20,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.DefaultSpeeds;
+import frc.robot.Constants.Tabs;
 import frc.robot.api.shuffleboard.AdjustableSpeed;
 
 /* 
@@ -30,16 +29,16 @@ import frc.robot.api.shuffleboard.AdjustableSpeed;
   backLeft      backRight
 */
 public class Drivetrain extends SubsystemBase {
-  private final AdjustableSpeed rightSpeedMultiplier = new AdjustableSpeed("Right Speed Multiplier", TEST_TAB, DEFAULT_DRIVE_LEFT_MULTIPLIER);
-  private final AdjustableSpeed leftSpeedMultiplier = new AdjustableSpeed("Left Speed Multiplier", TEST_TAB, DEFAULT_DRIVE_RIGHT_MULTIPLIER);
+  private final AdjustableSpeed rightSpeedMultiplier = new AdjustableSpeed("Right Speed Multiplier", Tabs.TEST, DefaultSpeeds.DRIVE_LEFT_MULTIPLIER);
+  private final AdjustableSpeed leftSpeedMultiplier = new AdjustableSpeed("Left Speed Multiplier", Tabs.TEST, DefaultSpeeds.DRIVE_RIGHT_MULTIPLIER);
 
   protected final AHRS gyro = new AHRS();
-  private final Encoder leftEncoder = new Encoder(DRIVETRAIN_LEFT_ENCODER_A, DRIVETRAIN_LEFT_ENCODER_B);
-  private final Encoder rightEncoder = new Encoder(DRIVETRAIN_RIGHT_ENCODER_A, DRIVETRAIN_RIGHT_ENCODER_B);
-  private final WPI_VictorSPX frontLeftMotor = new WPI_VictorSPX(DRIVETRAIN_FRONT_LEFT_MOTOR_ID);
-  private final WPI_VictorSPX frontRightMotor = new WPI_VictorSPX(DRIVETRAIN_FRONT_RIGHT_MOTOR_ID);
-  private final WPI_VictorSPX backLeftMotor = new WPI_VictorSPX(DRIVETRAIN_BACK_LEFT_MOTOR_ID);
-  private final WPI_VictorSPX backRightMotor = new WPI_VictorSPX(DRIVETRAIN_BACK_RIGHT_MOTOR_ID);
+  private final Encoder leftEncoder = new Encoder(LEFT_ENCODER_A, LEFT_ENCODER_B);
+  private final Encoder rightEncoder = new Encoder(RIGHT_ENCODER_A, RIGHT_ENCODER_B);
+  private final WPI_VictorSPX frontLeftMotor = new WPI_VictorSPX(FRONT_LEFT_MOTOR_ID);
+  private final WPI_VictorSPX frontRightMotor = new WPI_VictorSPX(FRONT_RIGHT_MOTOR_ID);
+  private final WPI_VictorSPX backLeftMotor = new WPI_VictorSPX(BACK_LEFT_MOTOR_ID);
+  private final WPI_VictorSPX backRightMotor = new WPI_VictorSPX(BACK_RIGHT_MOTOR_ID);
   private final MotorControllerGroup leftMotorGroup = new MotorControllerGroup(frontLeftMotor, backLeftMotor);
   private final MotorControllerGroup rightMotorGroup = new MotorControllerGroup(frontRightMotor, backRightMotor);
   private final DifferentialDrive diffDrive = new DifferentialDrive(leftMotorGroup, rightMotorGroup);
@@ -54,7 +53,6 @@ public class Drivetrain extends SubsystemBase {
     leftMotorGroup.setInverted(true); 
     leftEncoder.setDistancePerPulse((Math.PI * WHEEL_DIAMETER_INCH) / COUNTS_PER_REVOLUTION);
     rightEncoder.setDistancePerPulse((Math.PI * WHEEL_DIAMETER_INCH) / COUNTS_PER_REVOLUTION);
-    TEST_TAB.add(gyro);
   }
 
   public void arcadeDrive(double speed, double rotation) {
@@ -64,9 +62,8 @@ public class Drivetrain extends SubsystemBase {
   public void tankDrive(double leftSpeed, double rightSpeed) {
     diffDrive.tankDrive(leftSpeed * leftSpeedMultiplier.get(), rightSpeed * rightSpeedMultiplier.get());
   }
-
+  
   public void initTeleop() {
-    
     setDefaultCommand(new TeleopTankDrive(this, controller));
   }
 

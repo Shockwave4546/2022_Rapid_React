@@ -1,10 +1,10 @@
 package frc.robot.api.shuffleboard;
 
-public class Position2D {
+public class Pos2D {
   public final int x;
   public final int y;
   
-  public Position2D(int x, int y) {
+  public Pos2D(int x, int y) {
     this.x = x;
     this.y = y;
   }
