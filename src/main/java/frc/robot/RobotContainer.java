@@ -21,9 +21,19 @@ import frc.robot.subsystems.drivetrain.TurnDegrees;
 import frc.robot.subsystems.intakepivot.IntakePivot;
 import frc.robot.subsystems.intakepivot.PivotIntakeDown;
 
+/**
+ * Contains the encapsulated functionality for the {@link Robot} class.
+ */
 public class RobotContainer {
+  /**
+   * Initialize controllers 
+   */
   private final ShockwaveController driveController = new ShockwaveController(ControllerIO.DRIVE_PORT);
   private final ShockwaveController operatorController = new ShockwaveController(ControllerIO.OPERATOR_PORT);
+
+  /**
+   * Initalize all subsystems alongside autonomous chooser
+   */
   private final Elevator elevator = new Elevator();
   private final Intake intake = new Intake();
   private final IntakePivot intakePivot = new IntakePivot();
@@ -37,6 +47,9 @@ public class RobotContainer {
     initControllerBindings();
   }
 
+  /**
+   * Adds the autonomous commands to the chooser.
+   */
   private void initAuto() {
     auto.setDefault("3 Ball Auto", new ThreeBallAuto(shooter, elevator, drive, intakePivot, intake));
     auto.addOption("New 2 Ball Auto", new NewTwoBallAuto(shooter, elevator, drive, intakePivot, intake));
@@ -45,6 +58,10 @@ public class RobotContainer {
     auto.addOption("Taxi", new TaxiAuto(drive, intakePivot));
   }
 
+  /**
+   * To test functionalities during runtime, we can assign seperate buttons to each commands to debug individual components
+   * of the program as a whole.
+   */
   private void initTestTab() {
     final var test = Tabs.TEST;
     test.add("Run intake", new RunMotor(intake));
@@ -57,6 +74,22 @@ public class RobotContainer {
     test.add("Clockwise 90 degrees", new TurnDegrees(drive, 0.65, 90 * 0.68, true));
   }
 
+  /**
+   * Assigns button bindings on the driver and operator controllers to functions on the robot.
+   * Driver controller:
+   * Left Joystick -> Controls speed of left drivetrain motors.
+   * Right Joystick -> Controls speeds of right drivetrain motors.
+   * Right Trigger -> Drives at a constant speed forward.
+   * 
+   * Operator Controller:
+   * Left Trigger -> Runs intake pivot reversed.
+   * Right Trigger -> Runs intake pivot.
+   * Right Bumper -> Runs intake.
+   * Left Bumper -> Runs elevator.
+   * A Button -> Runs shooter.
+   * B Button -> Runs elevator inverted.
+   * X Button -> Runs intake
+   */
   private void initControllerBindings() {
     final var speed = new AdjustableSpeed("Constant Speed Value", Tabs.SPEEDS, -1.0);
     driveController.rightTrigger.get().whileActiveContinuous(new DriveStraight(drive, speed.get()));

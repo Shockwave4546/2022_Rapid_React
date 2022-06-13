@@ -43,12 +43,12 @@ public class Robot extends TimedRobot {
   @Override public void autonomousInit() {
     container.auto.runSelected();
   }
-    
+  
+  /**
+   * Ran once teleoperated mode is enabled. Once tele-op is enabled, the default command will be set to controller based driving,
+   * allowing for our drive team to begin the round. 
+   */
   @Override public void teleopInit() {
     container.drive.initTeleop();
-  }
-
-  @Override public void testInit() {
-    CommandScheduler.getInstance().cancelAll();
   }
 }
