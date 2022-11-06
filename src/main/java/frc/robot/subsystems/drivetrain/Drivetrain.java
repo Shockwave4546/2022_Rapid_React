@@ -10,7 +10,6 @@ import static frc.robot.Constants.Drivetrain.LEFT_ENCODER_B;
 import static frc.robot.Constants.Drivetrain.RIGHT_ENCODER_A;
 import static frc.robot.Constants.Drivetrain.RIGHT_ENCODER_B;
 import static frc.robot.Constants.Drivetrain.WHEEL_DIAMETER_INCH;
-import static frc.robot.Tabs.DEBUG;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
@@ -29,8 +28,8 @@ import frc.robot.api.shuffleboard.AdjustableSpeed;
   backLeft      backRight
 */
 public class Drivetrain extends SubsystemBase {
-  private final AdjustableSpeed rightSpeedMultiplier = new AdjustableSpeed("Right Speed Multiplier", DEBUG, DefaultSpeeds.DRIVE_LEFT_MULTIPLIER);
-  private final AdjustableSpeed leftSpeedMultiplier = new AdjustableSpeed("Left Speed Multiplier", DEBUG, DefaultSpeeds.DRIVE_RIGHT_MULTIPLIER);
+  private final AdjustableSpeed rightSpeedMultiplier = new AdjustableSpeed("Right Speed Multiplier", DefaultSpeeds.DRIVE_LEFT_MULTIPLIER);
+  private final AdjustableSpeed leftSpeedMultiplier = new AdjustableSpeed("Left Speed Multiplier", DefaultSpeeds.DRIVE_RIGHT_MULTIPLIER);
 
   protected final AHRS gyro = new AHRS();
   private final Encoder leftEncoder = new Encoder(LEFT_ENCODER_A, LEFT_ENCODER_B);

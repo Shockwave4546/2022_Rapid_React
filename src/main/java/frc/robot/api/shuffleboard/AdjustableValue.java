@@ -1,16 +1,24 @@
 package frc.robot.api.shuffleboard;
 
-import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import frc.robot.Tabs;
 
-public class AdjustableValue<T> {
-	private final T def;
-	private final NetworkTableEntry entry;
+public abstract class AdjustableValue<T> implements Supplier<T> {
+	protected final T def;
+	protected final NetworkTableEntry entry;
 
-	public AdjustableValue(T def, Consumer<NetworkTableEntry> entryBuilder) {
+	public AdjustableValue(String name, T def, Function<SimpleWidget, SimpleWidget> widgetBuilder) {
 		this.def = def;
-		this.entry = Tabs.DEBUG.add(null)
+		this.entry = widgetBuilder.apply(Tabs.DEBUG.add(name, def)).getEntry();
 	}
+
+	public NetworkTableEntry getRaw() {
+		return entry;
+	}
+
+	public abstract void set(T value);
 }

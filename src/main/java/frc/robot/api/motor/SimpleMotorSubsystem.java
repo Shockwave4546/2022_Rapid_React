@@ -12,7 +12,7 @@ public abstract class SimpleMotorSubsystem extends SubsystemBase {
     
     for (var config : configs) {
       if (tab == null || config.name == null) return;
-      config.speedEntry = new AdjustableSpeed(config.name, tab, config.defaultSpeed, config.position).getRaw();
+      config.speedEntry = new AdjustableSpeed(config.name, config.defaultSpeed, config.position).getRaw();
     }
   }
 
