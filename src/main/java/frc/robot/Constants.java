@@ -1,8 +1,5 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-
 public final class Constants {
   public static final class ControllerIO {
     public static final int DRIVE_PORT = 0;
@@ -17,12 +14,6 @@ public final class Constants {
     public static final double INTAKE_PIVOT = 0.6;
     public static final double DRIVE_LEFT_MULTIPLIER = 0.8;
     public static final double DRIVE_RIGHT_MULTIPLIER = 0.8;
-  }
-
-  public static final class Tabs {
-    public static final ShuffleboardTab SPEEDS = Shuffleboard.getTab("Speeds");
-    public static final ShuffleboardTab MATCH = Shuffleboard.getTab("Match");
-    public static final ShuffleboardTab TEST = Shuffleboard.getTab("Test");
   }
 
   public static final class Drivetrain {

@@ -6,7 +6,7 @@ import com.revrobotics.RelativeEncoder;
 
 import frc.robot.Constants;
 import frc.robot.Constants.DefaultSpeeds;
-import frc.robot.Constants.Tabs;
+import frc.robot.Tabs;
 import frc.robot.api.motor.MotorConfig;
 import frc.robot.api.motor.SimpleMotorSubsystem;
 
