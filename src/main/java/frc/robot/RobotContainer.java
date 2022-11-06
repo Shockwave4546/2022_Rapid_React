@@ -92,13 +92,13 @@ public class RobotContainer {
    */
   private void initControllerBindings() {
     final var speed = new AdjustableSpeed("Constant Speed Value", Tabs.SPEEDS, -1.0);
-    driveController.rightTrigger.get().whileActiveContinuous(new DriveStraight(drive, speed.get()));
-    operatorController.leftTrigger.get().whileActiveContinuous(new RunMotorInverted(intakePivot));
-    operatorController.rightTrigger.get().whileActiveContinuous(new RunMotor(intakePivot));
-    operatorController.rightBumper.get().whileHeld(new RunMotor(intake));
-    operatorController.leftBumper.get().whileHeld(new RunMotor(elevator));
-    operatorController.aButton.get().whileHeld(new RunMotor(shooter));
-    operatorController.bButton.get().whileHeld(new RunMotorInverted(elevator));
-    operatorController.xButton.get().whileHeld(new RunMotorInverted(intake));
+    driveController.rightTrigger.whileActiveContinuous(new DriveStraight(drive, speed.get()));
+    operatorController.leftTrigger.whileActiveContinuous(new RunMotorInverted(intakePivot));
+    operatorController.rightTrigger.whileActiveContinuous(new RunMotor(intakePivot));
+    operatorController.rightBumper.whileHeld(new RunMotor(intake));
+    operatorController.leftBumper.whileHeld(new RunMotor(elevator));
+    operatorController.aButton.whileHeld(new RunMotor(shooter));
+    operatorController.bButton.whileHeld(new RunMotorInverted(elevator));
+    operatorController.xButton.whileHeld(new RunMotorInverted(intake));
   }
 }

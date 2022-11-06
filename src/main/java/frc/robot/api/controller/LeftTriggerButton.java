@@ -5,6 +5,6 @@ import edu.wpi.first.wpilibj2.command.button.Button;
 
 public class LeftTriggerButton extends Button {
   public LeftTriggerButton(XboxController controller) {
-    super(() -> controller.getLeftTriggerAxis() > 0.2);
+    super(() -> controller.getLeftTriggerAxis() >= 0.1);
   }
 }

@@ -21,8 +21,8 @@ public class Robot extends TimedRobot {
    * which allows us to place these onto the Shuffleboard to aid the Drive Team.
    */
   @Override public void robotInit() {
-    CameraServer.startAutomaticCapture();
-    CameraServer.startAutomaticCapture();
+    CameraServer.startAutomaticCapture(0);
+    CameraServer.startAutomaticCapture(1);
   }
 
   /**
