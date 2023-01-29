@@ -2,11 +2,25 @@ package frc.robot;
 
 import static frc.robot.Tabs.DEBUG;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.trajectory.TrajectoryUtil;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ControllerIO;
 import frc.robot.api.motor.RunMotor;
 import frc.robot.api.motor.RunMotorInverted;
-import frc.robot.auto.AutonomousManager;
 import frc.robot.auto.OneBallAuto;
 import frc.robot.auto.TaxiAuto;
 import frc.robot.auto.ThreeBallAuto;
@@ -37,7 +51,7 @@ public class RobotContainer {
   private final IntakePivot intakePivot = new IntakePivot();
   private final Shooter shooter = new Shooter();
   protected final Drivetrain drive = new Drivetrain();
-  protected final AutonomousManager auto = new AutonomousManager(Tabs.MATCH);
+  protected final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
   public RobotContainer() {
     initAuto();
@@ -45,14 +59,43 @@ public class RobotContainer {
     initControllerBindings();
   }
 
+  public Command loadPathPlannerTrajectoryToRamseteCommand(String fileName, boolean resetOdometry) {
+    try {
+      final var trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(fileName);
+      final var trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+      final var ramseteCommand = new RamseteCommand(
+        trajectory, 
+        drive::getPose, 
+        new RamseteController(Constants.Drivetrain.RAMSETE_B, Constants.Drivetrain.RAMSETE_ZETA), 
+        new SimpleMotorFeedforward(Constants.Drivetrain.KS_VOLTS, Constants.Drivetrain.KV_VOLT_SECONDS_PER_METER, Constants.Drivetrain.KA_VOLT_SECONDS_SQUARED_PER_METER), 
+        drive.getKinematics(), 
+        drive::getWheelSpeeds, 
+        new PIDController(Constants.Drivetrain.P_DRIVE_VELOCITY, 0, 0), 
+        new PIDController(Constants.Drivetrain.P_DRIVE_VELOCITY, 0, 0), 
+        drive::tankDriveVolts, 
+        drive
+      );
+
+      return resetOdometry ? new SequentialCommandGroup(new InstantCommand(() -> drive.resetOdometry(trajectory.getInitialPose())), ramseteCommand) : ramseteCommand;
+    } catch (IOException e) {
+      DriverStation.reportError("Unable to open trajectory: '" + fileName + "'", e.getStackTrace());
+      return new InstantCommand();
+    }
+  }
+
   /**
    * Adds the autonomous commands to the chooser.
    */
   private void initAuto() {
-    auto.setDefault("3 Ball Auto", new ThreeBallAuto(shooter, elevator, drive, intakePivot, intake));
-    auto.addOption("2 Ball Auto", new TwoBallAuto(shooter, elevator, drive, intakePivot, intake));
-    auto.addOption("1 Ball Auto", new OneBallAuto(shooter, elevator, drive, intakePivot));
-    auto.addOption("Taxi", new TaxiAuto(drive, intakePivot));
+    Tabs.MATCH.add(autoChooser);
+    autoChooser.setDefaultOption("Do Nothing", new InstantCommand());
+    autoChooser.addOption("3 Ball Auto", new ThreeBallAuto(shooter, elevator, drive, intakePivot, intake));
+    autoChooser.addOption("2 Ball Auto", new TwoBallAuto(shooter, elevator, drive, intakePivot, intake));
+    autoChooser.addOption("1 Ball Auto", new OneBallAuto(shooter, elevator, drive, intakePivot));
+    autoChooser.addOption("Taxi", new TaxiAuto(drive, intakePivot));
+    autoChooser.addOption("Curvy Line", loadPathPlannerTrajectoryToRamseteCommand("pathplanner" + File.separatorChar + "generatedJSON" + File.separatorChar + "Curvy Line.wpilib.json", true));
+    autoChooser.addOption("Straight Line", loadPathPlannerTrajectoryToRamseteCommand("pathplanner" + File.separatorChar + "generatedJSON" + File.separatorChar + "Straight Line.wpilib.json", true));
+    autoChooser.addOption("1 One Ball Auto (Trajectory)", loadPathPlannerTrajectoryToRamseteCommand("pathplanner" + File.separatorChar + "generatedJSON" + File.separatorChar + "One Ball Auto.wpilib.json", true));
   }
 
   /**

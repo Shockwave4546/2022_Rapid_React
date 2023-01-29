@@ -25,7 +25,6 @@ public class TurnDegrees extends CommandBase {
     drive.arcadeDrive(0.0, clockwise ? speed : speed * -1);
   } 
 
-
   @Override public void end(boolean interrupted) {
     drive.stop();
   }

@@ -41,7 +41,7 @@ public class Robot extends TimedRobot {
    * this function will execute our 3-ball auto.
    */
   @Override public void autonomousInit() {
-    container.auto.runSelected();
+    container.autoChooser.getSelected().execute();
   }
   
   /**
