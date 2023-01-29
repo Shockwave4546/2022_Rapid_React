@@ -1,13 +1,13 @@
 package frc.robot.subsystems.drivetrain;
 
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class TeleopTankDrive extends CommandBase {
-  private final XboxController controller;
+  private final CommandXboxController controller;
   private final Drivetrain drive;
 
-  public TeleopTankDrive(Drivetrain drive, XboxController controller) {
+  public TeleopTankDrive(Drivetrain drive, CommandXboxController controller) {
     this.drive = drive;
     this.controller = controller;
     addRequirements(drive);

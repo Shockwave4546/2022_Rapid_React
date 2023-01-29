@@ -2,8 +2,8 @@ package frc.robot;
 
 import static frc.robot.Tabs.DEBUG;
 
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ControllerIO;
-import frc.robot.api.controller.ShockwaveController;
 import frc.robot.api.motor.RunMotor;
 import frc.robot.api.motor.RunMotorInverted;
 import frc.robot.auto.AutonomousManager;
@@ -26,8 +26,8 @@ public class RobotContainer {
   /**
    * Initialize controllers
    */
-  private final ShockwaveController driveController = new ShockwaveController(ControllerIO.DRIVE_PORT);
-  private final ShockwaveController operatorController = new ShockwaveController(ControllerIO.OPERATOR_PORT);
+  protected final CommandXboxController driveController = new CommandXboxController(ControllerIO.DRIVE_PORT);
+  private final CommandXboxController operatorController = new CommandXboxController(ControllerIO.OPERATOR_PORT);
 
   /**
    * Initalize all subsystems alongside autonomous chooser
@@ -36,7 +36,7 @@ public class RobotContainer {
   private final Intake intake = new Intake();
   private final IntakePivot intakePivot = new IntakePivot();
   private final Shooter shooter = new Shooter();
-  protected final Drivetrain drive = new Drivetrain(driveController);
+  protected final Drivetrain drive = new Drivetrain();
   protected final AutonomousManager auto = new AutonomousManager(Tabs.MATCH);
 
   public RobotContainer() {
@@ -89,12 +89,12 @@ public class RobotContainer {
    * X Button -> Runs intake
    */
   private void initControllerBindings() {
-    operatorController.leftTrigger.whileActiveContinuous(new RunMotorInverted(intakePivot));
-    operatorController.rightTrigger.whileActiveContinuous(new RunMotor(intakePivot));
-    operatorController.rightBumper.whileHeld(new RunMotor(intake));
-    operatorController.leftBumper.whileHeld(new RunMotor(elevator));
-    operatorController.aButton.whileHeld(new RunMotor(shooter));
-    operatorController.bButton.whileHeld(new RunMotorInverted(elevator));
-    operatorController.xButton.whileHeld(new RunMotorInverted(intake));
+    operatorController.leftTrigger().whileTrue(new RunMotorInverted(intakePivot));
+    operatorController.rightTrigger().whileTrue(new RunMotor(intakePivot));
+    operatorController.rightBumper().whileTrue(new RunMotor(intake));
+    operatorController.leftBumper().whileTrue(new RunMotor(elevator));
+    operatorController.a().whileTrue(new RunMotor(shooter));
+    operatorController.b().whileTrue(new RunMotorInverted(elevator));
+    operatorController.x().whileTrue(new RunMotorInverted(intake));
   }
 }

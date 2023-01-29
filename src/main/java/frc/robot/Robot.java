@@ -49,6 +49,6 @@ public class Robot extends TimedRobot {
    * allowing for our drive team to begin the round. 
    */
   @Override public void teleopInit() {
-    container.drive.initTeleop();
+    container.drive.initTeleop(container.driveController);
   }
 }

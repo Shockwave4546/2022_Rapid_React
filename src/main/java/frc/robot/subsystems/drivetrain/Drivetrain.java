@@ -16,10 +16,10 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.DefaultSpeeds;
 import frc.robot.api.shuffleboard.AdjustableSpeed;
 
@@ -41,10 +41,8 @@ public class Drivetrain extends SubsystemBase {
   private final MotorControllerGroup leftMotorGroup = new MotorControllerGroup(frontLeftMotor, backLeftMotor);
   private final MotorControllerGroup rightMotorGroup = new MotorControllerGroup(frontRightMotor, backRightMotor);
   private final DifferentialDrive diffDrive = new DifferentialDrive(leftMotorGroup, rightMotorGroup);
-  private final XboxController controller;
 
-  public Drivetrain(XboxController controller) {
-    this.controller = controller;
+  public Drivetrain() {
     frontLeftMotor.setNeutralMode(NeutralMode.Brake);
     backLeftMotor.setNeutralMode(NeutralMode.Brake);
     frontRightMotor.setNeutralMode(NeutralMode.Brake);
@@ -62,7 +60,7 @@ public class Drivetrain extends SubsystemBase {
     diffDrive.tankDrive(leftSpeed * leftSpeedMultiplier.get(), rightSpeed * rightSpeedMultiplier.get());
   }
   
-  public void initTeleop() {
+  public void initTeleop(CommandXboxController controller) {
     setDefaultCommand(new TeleopTankDrive(this, controller));
   }
 
