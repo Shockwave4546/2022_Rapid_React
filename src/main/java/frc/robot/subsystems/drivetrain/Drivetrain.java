@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 import frc.robot.Constants.DefaultSpeeds;
+import frc.robot.api.shuffleboard.AdjustableBoolean;
 import frc.robot.api.shuffleboard.AdjustableSpeed;
 
 /* 
@@ -38,6 +39,7 @@ public class Drivetrain extends SubsystemBase {
   private final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Constants.Drivetrain.TRACK_WIDTH);
   private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(gyro.getRotation2d(), 0, 0);
   private final DifferentialDrive diffDrive = new DifferentialDrive(leftMotorGroup, rightMotorGroup);
+  private final AdjustableBoolean useCheesyDrive = new AdjustableBoolean("Use Cheesy Drive", true);
 
   public Drivetrain() {
     frontLeftMotor.setNeutralMode(NeutralMode.Brake);
@@ -75,7 +77,7 @@ public class Drivetrain extends SubsystemBase {
   }
   
   public void initTeleop(CommandXboxController controller) {
-    setDefaultCommand(new TeleopTankDrive(this, controller));
+    setDefaultCommand(useCheesyDrive.get() ? new CheesyDriveCommand(this, controller) : new TeleopTankDrive(this, controller));
   }
 
   public void disableTeleop() {
