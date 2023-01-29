@@ -1,3 +1,0 @@
-1. Reflash the robot to remove the stupid "persistent" tabs
-
-2. Try to make the shuffleboard widgets automatically change their size to fit everthing
