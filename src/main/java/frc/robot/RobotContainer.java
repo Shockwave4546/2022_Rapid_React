@@ -4,8 +4,6 @@ import static frc.robot.Tabs.DEBUG;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
