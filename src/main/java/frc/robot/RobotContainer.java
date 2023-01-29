@@ -2,8 +2,9 @@ package frc.robot;
 
 import static frc.robot.Tabs.DEBUG;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -57,9 +58,9 @@ public class RobotContainer {
     initControllerBindings();
   }
 
-  public Command loadPathPlannerTrajectoryToRamseteCommand(String fileName, boolean resetOdometry) {
+  private Command loadPathPlannerTrajectoryToRamseteCommand(String fileName, boolean resetOdometry) {
     try {
-      final var trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(fileName);
+      final var trajectoryPath = Path.of(Filesystem.getDeployDirectory().getPath(), "pathplanner", "generatedJSON").resolve(fileName);
       final var trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
       final var ramseteCommand = new RamseteCommand(
         trajectory, 
@@ -91,9 +92,9 @@ public class RobotContainer {
     autoChooser.addOption("2 Ball Auto", new TwoBallAuto(shooter, elevator, drive, intakePivot, intake));
     autoChooser.addOption("1 Ball Auto", new OneBallAuto(shooter, elevator, drive, intakePivot));
     autoChooser.addOption("Taxi", new TaxiAuto(drive, intakePivot));
-    autoChooser.addOption("Curvy Line", loadPathPlannerTrajectoryToRamseteCommand("pathplanner" + File.separatorChar + "generatedJSON" + File.separatorChar + "Curvy Line.wpilib.json", true));
-    autoChooser.addOption("Straight Line", loadPathPlannerTrajectoryToRamseteCommand("pathplanner" + File.separatorChar + "generatedJSON" + File.separatorChar + "Straight Line.wpilib.json", true));
-    autoChooser.addOption("1 One Ball Auto (Trajectory)", loadPathPlannerTrajectoryToRamseteCommand("pathplanner" + File.separatorChar + "generatedJSON" + File.separatorChar + "One Ball Auto.wpilib.json", true));
+    autoChooser.addOption("CurvyLine", loadPathPlannerTrajectoryToRamseteCommand("Curvy Line.wpilib.json", true));
+    autoChooser.addOption("Straight Line", loadPathPlannerTrajectoryToRamseteCommand("Straight Line.wpilib.json", true));
+    autoChooser.addOption("One Ball Auto", loadPathPlannerTrajectoryToRamseteCommand("One Ball Auto.wpilib.json", true));  
   }
 
   /**
