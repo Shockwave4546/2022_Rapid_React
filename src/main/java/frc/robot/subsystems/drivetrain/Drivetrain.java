@@ -27,7 +27,7 @@ public class Drivetrain extends SubsystemBase {
   private final AdjustableSpeed leftSpeedMultiplier = new AdjustableSpeed("Left Speed Multiplier", DefaultSpeeds.DRIVE_RIGHT_MULTIPLIER);
 
   protected final AHRS gyro = new AHRS();
-  private final Encoder leftEncoder = new Encoder(Constants.Drivetrain.LEFT_ENCODER_A, Constants.Drivetrain.LEFT_ENCODER_B);
+  private final Encoder leftEncoder = new Encoder(Constants.Drivetrain.LEFT_ENCODER_A, Constants.Drivetrain.LEFT_ENCODER_B, true);
   private final Encoder rightEncoder = new Encoder(Constants.Drivetrain.RIGHT_ENCODER_A, Constants.Drivetrain.RIGHT_ENCODER_B);
   private final WPI_VictorSPX frontLeftMotor = new WPI_VictorSPX(Constants.Drivetrain.FRONT_LEFT_MOTOR_ID);
   private final WPI_VictorSPX frontRightMotor = new WPI_VictorSPX(Constants.Drivetrain.FRONT_RIGHT_MOTOR_ID);
