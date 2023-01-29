@@ -11,6 +11,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
@@ -50,6 +51,9 @@ public class Drivetrain extends SubsystemBase {
     resetEncoders();
     resetGyro();
     resetOdometry(new Pose2d());
+
+    SmartDashboard.putData("Left Encoder", leftEncoder);
+    SmartDashboard.putData("Right Encoder", rightEncoder);
   }
 
   @Override public void periodic() {

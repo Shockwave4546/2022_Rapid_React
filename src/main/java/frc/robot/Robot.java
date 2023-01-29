@@ -51,4 +51,8 @@ public class Robot extends TimedRobot {
   @Override public void teleopInit() {
     container.drive.initTeleop(container.driveController);
   }
+
+  @Override public void teleopExit() {
+    container.drive.disableTeleop();
+  }
 }
