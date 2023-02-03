@@ -56,6 +56,7 @@ public class Drivetrain extends SubsystemBase {
 
     SmartDashboard.putData("Left Encoder", leftEncoder);
     SmartDashboard.putData("Right Encoder", rightEncoder);
+    SmartDashboard.putData("Gyro", gyro);
   }
 
   @Override public void periodic() {
