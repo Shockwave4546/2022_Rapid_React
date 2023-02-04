@@ -5,6 +5,10 @@ import static frc.robot.Tabs.DEBUG;
 import java.io.IOException;
 import java.nio.file.Path;
 
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.commands.PPRamseteCommand;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -59,27 +63,26 @@ public class RobotContainer {
   }
 
   private Command loadPathPlannerTrajectoryToRamseteCommand(String fileName, boolean resetOdometry) {
-    try {
-      final var trajectoryPath = Path.of(Filesystem.getDeployDirectory().getPath(), "pathplanner", "generatedJSON").resolve(fileName);
-      final var trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-      final var ramseteCommand = new RamseteCommand(
-        trajectory, 
-        drive::getPose, 
-        new RamseteController(Constants.Drivetrain.RAMSETE_B, Constants.Drivetrain.RAMSETE_ZETA), 
-        new SimpleMotorFeedforward(Constants.Drivetrain.KS_VOLTS, Constants.Drivetrain.KV_VOLT_SECONDS_PER_METER, Constants.Drivetrain.KA_VOLT_SECONDS_SQUARED_PER_METER), 
-        drive.getKinematics(), 
-        drive::getWheelSpeeds, 
-        new PIDController(Constants.Drivetrain.P_DRIVE_VELOCITY, 0, 0), 
-        new PIDController(Constants.Drivetrain.P_DRIVE_VELOCITY, 0, 0), 
-        drive::tankDriveVolts, 
-        drive
-      );
+    // final var trajectoryPath = Path.of(Filesystem.getDeployDirectory().getPath(), "pathplanner", "generatedJSON").resolve(fileName);
+    // final var trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+    final var path = PathPlanner.loadPath(fileName, new PathConstraints(4, 3));
+    final var ramseteCommand = new PPRamseteCommand(
+      path, 
+      drive::getPose, 
+      new RamseteController(Constants.Drivetrain.RAMSETE_B, Constants.Drivetrain.RAMSETE_ZETA), 
+      new SimpleMotorFeedforward(Constants.Drivetrain.KS_VOLTS, Constants.Drivetrain.KV_VOLT_SECONDS_PER_METER, Constants.Drivetrain.KA_VOLT_SECONDS_SQUARED_PER_METER), 
+      drive.getKinematics(), 
+      drive::getWheelSpeeds, 
+      new PIDController(Constants.Drivetrain.P_DRIVE_VELOCITY, 0, 0), 
+      new PIDController(Constants.Drivetrain.P_DRIVE_VELOCITY, 0, 0), 
+      drive::tankDriveVolts,
+      true,
+      drive
+    );
 
-      return resetOdometry ? new SequentialCommandGroup(new InstantCommand(() -> drive.resetOdometry(trajectory.getInitialPose())), ramseteCommand) : ramseteCommand;
-    } catch (IOException e) {
-      DriverStation.reportError("Unable to open trajectory: '" + fileName + "'", e.getStackTrace());
-      return new InstantCommand();
-    }
+    // final var ramseteCommand = new PPRamseteCommand(trajectory, null, null, null, null, null, null, null, null, resetOdometry, null)
+
+    return resetOdometry ? (new SequentialCommandGroup(new InstantCommand(() -> drive.resetOdometry(path.getInitialPose())), ramseteCommand)) : ramseteCommand;
   }
 
   /**
@@ -88,13 +91,14 @@ public class RobotContainer {
   private void initAuto() {
     Tabs.MATCH.add(autoChooser);
     autoChooser.setDefaultOption("Do Nothing", new InstantCommand());
-    autoChooser.addOption("3 Ball Auto", new ThreeBallAuto(shooter, elevator, drive, intakePivot, intake));
-    autoChooser.addOption("2 Ball Auto", new TwoBallAuto(shooter, elevator, drive, intakePivot, intake));
-    autoChooser.addOption("1 Ball Auto", new OneBallAuto(shooter, elevator, drive, intakePivot));
-    autoChooser.addOption("Taxi", new TaxiAuto(drive, intakePivot));
-    autoChooser.addOption("CurvyLine", loadPathPlannerTrajectoryToRamseteCommand("Curvy Line.wpilib.json", true));
-    autoChooser.addOption("Straight Line", loadPathPlannerTrajectoryToRamseteCommand("Straight Line.wpilib.json", true));
-    autoChooser.addOption("One Ball Auto", loadPathPlannerTrajectoryToRamseteCommand("One Ball Auto.wpilib.json", true));  
+    // autoChooser.addOption("3 Ball Auto", new ThreeBallAuto(shooter, elevator, drive, intakePivot, intake));
+    // autoChooser.addOption("2 Ball Auto", new TwoBallAuto(shooter, elevator, drive, intakePivot, intake));
+    // autoChooser.addOption("1 Ball Auto", new OneBallAuto(shooter, elevator, drive, intakePivot));
+    // autoChooser.addOption("Taxi", new TaxiAuto(drive, intakePivot));
+    // autoChooser.addOption("CurvyLine", loadPathPlannerTrajectoryToRamseteCommand("Curvy Line.wpilib.json", true));
+    autoChooser.addOption("Straight Line", loadPathPlannerTrajectoryToRamseteCommand("Straight Line", true));
+    autoChooser.addOption("Curvy Line", loadPathPlannerTrajectoryToRamseteCommand("Curvy Line", true));
+    // autoChooser.addOption("One Ball Auto", loadPathPlannerTrajectoryToRamseteCommand("One Ball Auto.wpilib.json", true));  
   }
 
   /**

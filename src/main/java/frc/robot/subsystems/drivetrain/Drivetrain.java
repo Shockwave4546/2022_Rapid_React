@@ -42,10 +42,14 @@ public class Drivetrain extends SubsystemBase {
   private final AdjustableBoolean useCheesyDrive = new AdjustableBoolean("Use Cheesy Drive", true);
 
   public Drivetrain() {
-    frontLeftMotor.setNeutralMode(NeutralMode.Brake);
-    backLeftMotor.setNeutralMode(NeutralMode.Brake);
-    frontRightMotor.setNeutralMode(NeutralMode.Brake);
-    backRightMotor.setNeutralMode(NeutralMode.Brake);
+    // frontLeftMotor.setNeutralMode(NeutralMode.Brake);
+    // backLeftMotor.setNeutralMode(NeutralMode.Brake);
+    // frontRightMotor.setNeutralMode(NeutralMode.Brake);
+    // backRightMotor.setNeutralMode(NeutralMode.Brake);
+    frontLeftMotor.disable();
+    backLeftMotor.disable();
+    frontRightMotor.disable();
+    backRightMotor.disable();
     leftMotorGroup.setInverted(true); 
     leftEncoder.setDistancePerPulse(Constants.Drivetrain.DISTANCE_PER_PULSE);
     rightEncoder.setDistancePerPulse(Constants.Drivetrain.DISTANCE_PER_PULSE);
@@ -53,6 +57,8 @@ public class Drivetrain extends SubsystemBase {
     resetEncoders();
     resetGyro();
     resetOdometry(new Pose2d());
+
+    diffDrive.setSafetyEnabled(false);
 
     SmartDashboard.putData("Left Encoder", leftEncoder);
     SmartDashboard.putData("Right Encoder", rightEncoder);
@@ -72,6 +78,11 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void tankDriveVolts(double leftVolts, double rightVolts) {
+    if (leftVolts == 0.0 && rightVolts == 0.0) {
+      stop();
+      return;
+    }
+
     leftMotorGroup.setVoltage(leftVolts);
     rightMotorGroup.setVoltage(rightVolts);
     diffDrive.feed();
