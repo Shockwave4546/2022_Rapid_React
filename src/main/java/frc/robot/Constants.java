@@ -34,10 +34,10 @@ public final class Constants {
     public static final double TRACK_WIDTH = Units.inchesToMeters(24.0729167);
 
     // TODO: SysID these values.
-    public static final double KS_VOLTS = 0.7191;
-    public static final double KV_VOLT_SECONDS_PER_METER = 12.199;
-    public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 7.3424;
-    public static final double P_DRIVE_VELOCITY = 0.39106;
+    public static final double KS_VOLTS = 0.7193;
+    public static final double KV_VOLT_SECONDS_PER_METER = 12.153;
+    public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 7.3143;
+    public static final double P_DRIVE_VELOCITY = 6.5848;
 
     // Source: https://docs.wpilib.org/en/stable/docs/software/pathplanning/trajectory-tutorial/entering-constants.html#:~:text=public%20static%20final%20double%20kRamseteB,double%20kRamseteZeta%20%3D%200.7%3B
     public static final double RAMSETE_B = 2;

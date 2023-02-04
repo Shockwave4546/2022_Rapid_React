@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.commands.PPRamseteCommand;
+import com.pathplanner.lib.server.PathPlannerServer;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
@@ -57,6 +58,7 @@ public class RobotContainer {
   protected final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
   public RobotContainer() {
+    PathPlannerServer.startServer(5811);
     initAuto();
     initDebugTab();
     initControllerBindings();

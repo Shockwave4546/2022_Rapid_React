@@ -83,8 +83,8 @@ public class Drivetrain extends SubsystemBase {
       return;
     }
 
-    leftMotorGroup.setVoltage(leftVolts);
-    rightMotorGroup.setVoltage(rightVolts);
+    leftMotorGroup.setVoltage(-leftVolts);
+    rightMotorGroup.setVoltage(-rightVolts);
     diffDrive.feed();
   }
   
@@ -131,6 +131,7 @@ public class Drivetrain extends SubsystemBase {
 
   public void resetOdometry(Pose2d pose) {
     resetEncoders();
+    resetGyro();
     odometry.resetPosition(gyro.getRotation2d(), 0, 0, pose);
   }
 
