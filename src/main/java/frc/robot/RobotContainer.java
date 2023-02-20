@@ -65,9 +65,36 @@ public class RobotContainer {
   }
 
   private Command loadPathPlannerTrajectoryToRamseteCommand(String fileName, boolean resetOdometry) {
-    // final var trajectoryPath = Path.of(Filesystem.getDeployDirectory().getPath(), "pathplanner", "generatedJSON").resolve(fileName);
-    // final var trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-    final var path = PathPlanner.loadPath(fileName, new PathConstraints(4, 3));
+    /**
+     * PathWeaver
+     */
+
+    // try {
+    //   final var trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(fileName);
+    //   final var trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+    //   final var ramseteCommand = new ShockwaveTrajectoryCommand(
+    //     trajectory, 
+    //     drive::getPose, 
+    //     new RamseteController(Constants.Drivetrain.RAMSETE_B, Constants.Drivetrain.RAMSETE_ZETA), 
+    //     new SimpleMotorFeedforward(Constants.Drivetrain.KS_VOLTS, Constants.Drivetrain.KV_VOLT_SECONDS_PER_METER, Constants.Drivetrain.KA_VOLT_SECONDS_SQUARED_PER_METER), 
+    //     drive.getKinematics(), 
+    //     drive::getWheelSpeeds, 
+    //     new PIDController(Constants.Drivetrain.P_DRIVE_VELOCITY, 0, 0), 
+    //     new PIDController(Constants.Drivetrain.P_DRIVE_VELOCITY, 0, 0), 
+    //     drive::tankDriveVolts,
+    //     drive
+    //   );
+
+    //   return resetOdometry ? (new SequentialCommandGroup(new InstantCommand(() -> drive.resetOdometry(trajectory.getInitialPose())), ramseteCommand)) : ramseteCommand;
+    // } catch (IOException e) {
+    //   DriverStation.reportError("ahhhh", e.getStackTrace());
+    //   return new InstantCommand();
+    // }
+
+     /**
+      * 3rd Party PathPlanner
+      */
+    final var path = PathPlanner.loadPath(fileName, new PathConstraints(3, 1));
     final var ramseteCommand = new PPRamseteCommand(
       path, 
       drive::getPose, 
@@ -81,8 +108,6 @@ public class RobotContainer {
       true,
       drive
     );
-
-    // final var ramseteCommand = new PPRamseteCommand(trajectory, null, null, null, null, null, null, null, null, resetOdometry, null)
 
     return resetOdometry ? (new SequentialCommandGroup(new InstantCommand(() -> drive.resetOdometry(path.getInitialPose())), ramseteCommand)) : ramseteCommand;
   }
@@ -99,7 +124,7 @@ public class RobotContainer {
     // autoChooser.addOption("Taxi", new TaxiAuto(drive, intakePivot));
     // autoChooser.addOption("CurvyLine", loadPathPlannerTrajectoryToRamseteCommand("Curvy Line.wpilib.json", true));
     autoChooser.addOption("Straight Line", loadPathPlannerTrajectoryToRamseteCommand("Straight Line", true));
-    autoChooser.addOption("Curvy Line", loadPathPlannerTrajectoryToRamseteCommand("Curvy Line", true));
+    // autoChooser.addOption("StraightLine", loadPathPlannerTrajectoryToRamseteCommand("StraightLine.wpilib.json", true));
     // autoChooser.addOption("One Ball Auto", loadPathPlannerTrajectoryToRamseteCommand("One Ball Auto.wpilib.json", true));  
   }
 

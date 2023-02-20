@@ -42,14 +42,10 @@ public class Drivetrain extends SubsystemBase {
   private final AdjustableBoolean useCheesyDrive = new AdjustableBoolean("Use Cheesy Drive", true);
 
   public Drivetrain() {
-    // frontLeftMotor.setNeutralMode(NeutralMode.Brake);
-    // backLeftMotor.setNeutralMode(NeutralMode.Brake);
-    // frontRightMotor.setNeutralMode(NeutralMode.Brake);
-    // backRightMotor.setNeutralMode(NeutralMode.Brake);
-    frontLeftMotor.disable();
-    backLeftMotor.disable();
-    frontRightMotor.disable();
-    backRightMotor.disable();
+    frontLeftMotor.setNeutralMode(NeutralMode.Brake);
+    backLeftMotor.setNeutralMode(NeutralMode.Brake);
+    frontRightMotor.setNeutralMode(NeutralMode.Brake);
+    backRightMotor.setNeutralMode(NeutralMode.Brake);
     leftMotorGroup.setInverted(true); 
     leftEncoder.setDistancePerPulse(Constants.Drivetrain.DISTANCE_PER_PULSE);
     rightEncoder.setDistancePerPulse(Constants.Drivetrain.DISTANCE_PER_PULSE);
